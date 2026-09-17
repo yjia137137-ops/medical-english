@@ -247,28 +247,32 @@
       color: #333;
       border-color: #ccc;
     }
-.filter-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 24px;
-  overflow-x: auto;
-}
 
-.filter-btn {
-  background: #fff;
-  border: 1px solid #ddd;
-  color: #777;
-  padding: 9px 18px;
-  border-radius: 20px;
-  font-size: 14px;
-  white-space: nowrap;
-}
+    /* Vocabulary Filters */
 
-.filter-btn.active {
-  background: #222;
-  color: #fff;
-  border-color: #222;
-}
+    .filter-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+
+    .filter-btn {
+      background: #fff;
+      border: 1px solid #ddd;
+      color: #777;
+      padding: 9px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .filter-btn.active {
+      background: #222;
+      color: #fff;
+      border-color: #222;
+    }
+
     .empty {
       text-align: center;
       color: #aaa;
@@ -293,7 +297,9 @@
 
 <body>
 
-  <!-- Home -->
+  <!-- =========================
+       Home
+  ========================= -->
 
   <div id="homePage" class="page">
 
@@ -388,7 +394,9 @@
   </div>
 
 
-  <!-- Add Page -->
+  <!-- =========================
+       Add Page
+  ========================= -->
 
   <div
     id="addPage"
@@ -429,6 +437,7 @@
 
       </div>
 
+
       <div class="field">
 
         <label>
@@ -442,10 +451,12 @@
 
       </div>
 
+
       <div class="field">
 
         <label>
           Vocabulary
+
           <span style="color:#999;font-size:13px;">
             (optional)
           </span>
@@ -459,10 +470,12 @@
 
       </div>
 
+
       <div class="field">
 
         <label>
           Your understanding
+
           <span style="color:#999;font-size:13px;">
             (optional)
           </span>
@@ -476,6 +489,7 @@
 
       </div>
 
+
       <button
         class="save-btn"
         onclick="saveNote()"
@@ -488,7 +502,9 @@
   </div>
 
 
-  <!-- My Notes -->
+  <!-- =========================
+       My Notes
+  ========================= -->
 
   <div
     id="notesPage"
@@ -522,7 +538,9 @@
   </div>
 
 
-  <!-- Vocabulary -->
+  <!-- =========================
+       Vocabulary
+  ========================= -->
 
   <div
     id="vocabularyPage"
@@ -548,39 +566,45 @@
       >
         0 words saved
       </div>
-<div class="filter-row">
 
-  <button
-    class="filter-btn active"
-    id="filterAll"
-    onclick="setVocabularyFilter('all')"
-  >
-    All
-  </button>
+      <div class="filter-row">
 
-  <button
-    class="filter-btn"
-    id="filterReview"
-    onclick="setVocabularyFilter('review')"
-  >
-    To review
-  </button>
+        <button
+          class="filter-btn active"
+          id="filterAll"
+          onclick="setVocabularyFilter('all')"
+        >
+          All
+        </button>
 
-  <button
-    class="filter-btn"
-    id="filterLearned"
-    onclick="setVocabularyFilter('learned')"
-  >
-    Learned
-  </button>
+        <button
+          class="filter-btn"
+          id="filterReview"
+          onclick="setVocabularyFilter('review')"
+        >
+          To review
+        </button>
 
-</div>
+        <button
+          class="filter-btn"
+          id="filterLearned"
+          onclick="setVocabularyFilter('learned')"
+        >
+          Learned
+        </button>
+
+      </div>
+
     </div>
 
     <div id="vocabularyList"></div>
 
   </div>
 
+
+  <!-- =========================
+       JavaScript
+  ========================= -->
 
   <script>
 
@@ -631,7 +655,66 @@
 
 
     // =========================
-    // Page navigation
+    // Vocabulary Filter
+    // =========================
+
+    let vocabularyFilter = "all";
+
+
+    function setVocabularyFilter(filter) {
+
+      vocabularyFilter = filter;
+
+
+      document
+        .getElementById("filterAll")
+        .classList.remove("active");
+
+
+      document
+        .getElementById("filterReview")
+        .classList.remove("active");
+
+
+      document
+        .getElementById("filterLearned")
+        .classList.remove("active");
+
+
+      if (filter === "all") {
+
+        document
+          .getElementById("filterAll")
+          .classList.add("active");
+
+      }
+
+
+      if (filter === "review") {
+
+        document
+          .getElementById("filterReview")
+          .classList.add("active");
+
+      }
+
+
+      if (filter === "learned") {
+
+        document
+          .getElementById("filterLearned")
+          .classList.add("active");
+
+      }
+
+
+      renderVocabulary();
+
+    }
+
+
+    // =========================
+    // Page Navigation
     // =========================
 
     function hideAllPages() {
@@ -640,13 +723,16 @@
         "homePage"
       ).style.display = "none";
 
+
       document.getElementById(
         "addPage"
       ).style.display = "none";
 
+
       document.getElementById(
         "notesPage"
       ).style.display = "none";
+
 
       document.getElementById(
         "vocabularyPage"
@@ -700,118 +786,7 @@
         "vocabularyPage"
       ).style.display = "block";
 
-      function renderVocabulary() {
-
-  const vocabulary = getVocabulary();
-
-  const list =
-    document.getElementById("vocabularyList");
-
-  const subtitle =
-    document.getElementById("vocabularySubtitle");
-
-
-  // 根据当前筛选条件过滤
-  let filteredVocabulary = vocabulary;
-
-  if (vocabularyFilter === "review") {
-
-    filteredVocabulary =
-      vocabulary.filter(
-        item => item.learned !== true
-      );
-
-  }
-
-  if (vocabularyFilter === "learned") {
-
-    filteredVocabulary =
-      vocabulary.filter(
-        item => item.learned === true
-      );
-
-  }
-
-
-  subtitle.textContent =
-    filteredVocabulary.length + " words";
-
-
-  if (filteredVocabulary.length === 0) {
-
-    list.innerHTML = `
-      <div class="empty">
-
-        <div>
-          No vocabulary here.
-        </div>
-
-      </div>
-    `;
-
-    return;
-  }
-
-
-  list.innerHTML =
-    filteredVocabulary.map(item => {
-
-      const learned =
-        item.learned === true;
-
-
-      return `
-
-        <div class="word-card">
-
-          <div class="top-row">
-
-            <div class="word">
-              ${escapeHtml(item.word)}
-            </div>
-
-            <div class="date">
-              ${escapeHtml(item.date)}
-            </div>
-
-          </div>
-
-          <div class="topic">
-            ${escapeHtml(item.topic)}
-          </div>
-
-          <div class="actions">
-
-            <button
-              class="listen-btn"
-              onclick="listenText(${JSON.stringify(item.word)})"
-            >
-              ▶ Listen
-            </button>
-
-            <button
-              class="learn-btn ${learned ? "learned" : ""}"
-              onclick="toggleLearned(${item.id})"
-            >
-              ${learned ? "✓ Learned" : "○ To review"}
-            </button>
-
-            <button
-              class="delete-btn"
-              onclick="deleteWord(${item.id})"
-            >
-              Delete
-            </button>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-}
+      renderVocabulary();
 
     }
 
@@ -838,27 +813,31 @@
     function saveNote() {
 
       const topic =
-        document.getElementById(
-          "topicInput"
-        ).value.trim();
+        document
+          .getElementById("topicInput")
+          .value
+          .trim();
 
 
       const sentence =
-        document.getElementById(
-          "sentenceInput"
-        ).value.trim();
+        document
+          .getElementById("sentenceInput")
+          .value
+          .trim();
 
 
       const vocabularyText =
-        document.getElementById(
-          "vocabularyInput"
-        ).value.trim();
+        document
+          .getElementById("vocabularyInput")
+          .value
+          .trim();
 
 
       const meaning =
-        document.getElementById(
-          "meaningInput"
-        ).value.trim();
+        document
+          .getElementById("meaningInput")
+          .value
+          .trim();
 
 
       if (!sentence) {
@@ -879,7 +858,8 @@
 
       const newNote = {
 
-        id: Date.now(),
+        id:
+          Date.now(),
 
         topic:
           topic || "Uncategorized",
@@ -896,9 +876,14 @@
       };
 
 
-      notes.unshift(newNote);
+      notes.unshift(
+        newNote
+      );
 
-      saveNotes(notes);
+
+      saveNotes(
+        notes
+      );
 
 
       // Save vocabulary
@@ -906,7 +891,9 @@
       const words =
         vocabularyText
           .split(/[\n,，]+/)
-          .map(word => word.trim())
+          .map(
+            word => word.trim()
+          )
           .filter(
             word => word.length > 0
           );
@@ -916,43 +903,49 @@
         getVocabulary();
 
 
-      words.forEach(word => {
+      words.forEach(
+        word => {
 
-        const exists =
-          vocabulary.some(item =>
-            item.word.toLowerCase() ===
-            word.toLowerCase()
-          );
+          const exists =
+            vocabulary.some(
+              item =>
+                item.word.toLowerCase() ===
+                word.toLowerCase()
+            );
 
 
-        if (!exists) {
+          if (!exists) {
 
-          vocabulary.unshift({
+            vocabulary.unshift({
 
-            id:
-              Date.now() +
-              Math.random(),
+              id:
+                Date.now() +
+                Math.random(),
 
-            word:
-              word,
+              word:
+                word,
 
-            topic:
-              topic || "Uncategorized",
+              topic:
+                topic ||
+                "Uncategorized",
 
-            date:
-              new Date().toLocaleDateString(),
+              date:
+                new Date().toLocaleDateString(),
 
-            learned:
-              false
+              learned:
+                false
 
-          });
+            });
+
+          }
 
         }
+      );
 
-      });
 
-
-      saveVocabulary(vocabulary);
+      saveVocabulary(
+        vocabulary
+      );
 
 
       // Clear form
@@ -977,7 +970,10 @@
       ).value = "";
 
 
-      alert("Saved.");
+      alert(
+        "Saved."
+      );
+
 
       showHome();
 
@@ -990,7 +986,8 @@
 
     function renderNotes() {
 
-      const notes = getNotes();
+      const notes =
+        getNotes();
 
 
       const list =
@@ -1017,57 +1014,65 @@
 
 
       list.innerHTML =
-        notes.map(note => `
+        notes
+          .map(
+            note => `
 
-          <div class="note-card">
+              <div class="note-card">
 
-            <div class="top-row">
+                <div class="top-row">
 
-              <div class="topic">
-                ${escapeHtml(note.topic)}
-              </div>
+                  <div class="topic">
+                    ${escapeHtml(note.topic)}
+                  </div>
 
-              <div class="date">
-                ${escapeHtml(note.date)}
-              </div>
+                  <div class="date">
+                    ${escapeHtml(note.date)}
+                  </div>
 
-            </div>
-
-            <div class="sentence">
-              ${escapeHtml(note.sentence)}
-            </div>
-
-            ${
-              note.meaning
-              ? `
-                <div class="meaning">
-                  ${escapeHtml(note.meaning)}
                 </div>
-              `
-              : ""
-            }
 
-            <div class="actions">
 
-              <button
-                class="listen-btn"
-                onclick="listenText(${JSON.stringify(note.sentence)})"
-              >
-                ▶ Listen
-              </button>
+                <div class="sentence">
+                  ${escapeHtml(note.sentence)}
+                </div>
 
-              <button
-                class="delete-btn"
-                onclick="deleteNote(${note.id})"
-              >
-                Delete
-              </button>
 
-            </div>
+                ${
+                  note.meaning
+                    ? `
+                      <div class="meaning">
+                        ${escapeHtml(note.meaning)}
+                      </div>
+                    `
+                    : ""
+                }
 
-          </div>
 
-        `).join("");
+                <div class="actions">
+
+                  <button
+                    class="listen-btn"
+                    onclick="listenText(${JSON.stringify(note.sentence)})"
+                  >
+                    ▶ Listen
+                  </button>
+
+
+                  <button
+                    class="delete-btn"
+                    onclick="deleteNote(${note.id})"
+                  >
+                    Delete
+                  </button>
+
+                </div>
+
+              </div>
+
+            `
+          )
+          .join("");
 
     }
 
@@ -1088,93 +1093,165 @@
         );
 
 
-      document.getElementById(
-        "vocabularySubtitle"
-      ).textContent =
-        vocabulary.length +
-        " words saved";
+      // Apply filter
+
+      let filteredVocabulary =
+        vocabulary;
 
 
-      if (vocabulary.length === 0) {
+      if (
+        vocabularyFilter ===
+        "review"
+      ) {
 
-        list.innerHTML = `
-          <div class="empty">
-
-            <div>
-              No vocabulary yet.
-            </div>
-
-            <div
-              style="margin-top:10px;font-size:14px;"
-            >
-              Add useful words when saving a sentence.
-            </div>
-
-          </div>
-        `;
-
-        return;
+        filteredVocabulary =
+          vocabulary.filter(
+            item =>
+              item.learned !== true
+          );
 
       }
 
 
-      list.innerHTML =
-        vocabulary.map(item => {
+      if (
+        vocabularyFilter ===
+        "learned"
+      ) {
 
-          const learned =
-            item.learned === true;
+        filteredVocabulary =
+          vocabulary.filter(
+            item =>
+              item.learned === true
+          );
+
+      }
 
 
-          return `
+      // Update subtitle
 
-            <div class="word-card">
+      document.getElementById(
+        "vocabularySubtitle"
+      ).textContent =
+        filteredVocabulary.length +
+        " words";
 
-              <div class="top-row">
 
-                <div class="word">
-                  ${escapeHtml(item.word)}
-                </div>
+      // Empty state
 
-                <div class="date">
-                  ${escapeHtml(item.date)}
-                </div>
+      if (
+        filteredVocabulary.length === 0
+      ) {
 
+        if (
+          vocabulary.length === 0
+        ) {
+
+          list.innerHTML = `
+
+            <div class="empty">
+
+              <div>
+                No vocabulary yet.
               </div>
 
-              <div class="topic">
-                ${escapeHtml(item.topic)}
-              </div>
-
-              <div class="actions">
-
-                <button
-                  class="listen-btn"
-                  onclick="listenText(${JSON.stringify(item.word)})"
-                >
-                  ▶ Listen
-                </button>
-
-                <button
-                  class="learn-btn ${learned ? "learned" : ""}"
-                  onclick="toggleLearned(${item.id})"
-                >
-                  ${learned ? "✓ Learned" : "○ To review"}
-                </button>
-
-                <button
-                  class="delete-btn"
-                  onclick="deleteWord(${item.id})"
-                >
-                  Delete
-                </button>
-
+              <div
+                style="margin-top:10px;font-size:14px;"
+              >
+                Add useful words when saving a sentence.
               </div>
 
             </div>
 
           `;
 
-        }).join("");
+        } else {
+
+          list.innerHTML = `
+
+            <div class="empty">
+              No vocabulary here.
+            </div>
+
+          `;
+
+        }
+
+        return;
+
+      }
+
+
+      // Render vocabulary cards
+
+      list.innerHTML =
+        filteredVocabulary
+          .map(
+            item => {
+
+              const learned =
+                item.learned === true;
+
+
+              return `
+
+                <div class="word-card">
+
+                  <div class="top-row">
+
+                    <div class="word">
+                      ${escapeHtml(item.word)}
+                    </div>
+
+                    <div class="date">
+                      ${escapeHtml(item.date)}
+                    </div>
+
+                  </div>
+
+
+                  <div class="topic">
+                    ${escapeHtml(item.topic)}
+                  </div>
+
+
+                  <div class="actions">
+
+                    <button
+                      class="listen-btn"
+                      onclick="listenText(${JSON.stringify(item.word)})"
+                    >
+                      ▶ Listen
+                    </button>
+
+
+                    <button
+                      class="learn-btn ${learned ? "learned" : ""}"
+                      onclick="toggleLearned(${item.id})"
+                    >
+                      ${
+                        learned
+                          ? "✓ Learned"
+                          : "○ To review"
+                      }
+                    </button>
+
+
+                    <button
+                      class="delete-btn"
+                      onclick="deleteWord(${item.id})"
+                    >
+                      Delete
+                    </button>
+
+                  </div>
+
+                </div>
+
+              `;
+
+            }
+          )
+          .join("");
 
     }
 
@@ -1191,12 +1268,15 @@
 
       const item =
         vocabulary.find(
-          item => item.id === id
+          item =>
+            item.id === id
         );
 
 
       if (!item) {
+
         return;
+
       }
 
 
@@ -1204,54 +1284,11 @@
         item.learned !== true;
 
 
-      saveVocabulary(vocabulary);
-let vocabularyFilter = "all";
-      function setVocabularyFilter(filter) {
-
-  vocabularyFilter = filter;
+      saveVocabulary(
+        vocabulary
+      );
 
 
-  document.getElementById(
-    "filterAll"
-  ).classList.remove("active");
-
-  document.getElementById(
-    "filterReview"
-  ).classList.remove("active");
-
-  document.getElementById(
-    "filterLearned"
-  ).classList.remove("active");
-
-
-  if (filter === "all") {
-
-    document.getElementById(
-      "filterAll"
-    ).classList.add("active");
-
-  }
-
-  if (filter === "review") {
-
-    document.getElementById(
-      "filterReview"
-    ).classList.add("active");
-
-  }
-
-  if (filter === "learned") {
-
-    document.getElementById(
-      "filterLearned"
-    ).classList.add("active");
-
-  }
-
-
-  renderVocabulary();
-
-}
       renderVocabulary();
 
     }
@@ -1270,17 +1307,23 @@ let vocabularyFilter = "all";
 
 
       if (!confirmed) {
+
         return;
+
       }
 
 
       const notes =
         getNotes().filter(
-          item => item.id !== id
+          item =>
+            item.id !== id
         );
 
 
-      saveNotes(notes);
+      saveNotes(
+        notes
+      );
+
 
       renderNotes();
 
@@ -1302,17 +1345,23 @@ let vocabularyFilter = "all";
 
 
       if (!confirmed) {
+
         return;
+
       }
 
 
       const vocabulary =
         getVocabulary().filter(
-          item => item.id !== id
+          item =>
+            item.id !== id
         );
 
 
-      saveVocabulary(vocabulary);
+      saveVocabulary(
+        vocabulary
+      );
+
 
       renderVocabulary();
 
@@ -1326,7 +1375,9 @@ let vocabularyFilter = "all";
     function listenText(text) {
 
       if (!text) {
+
         return;
+
       }
 
 
@@ -1389,7 +1440,7 @@ let vocabularyFilter = "all";
 
 
     // =========================
-    // Initial load
+    // Initial Load
     // =========================
 
     showHome();
