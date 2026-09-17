@@ -292,7 +292,7 @@
 </head>
 
 <body>
-<div style="padding:10px;background:#fff3cd;text-align:center;font-size:14px;">LISTEN TEST VERSION LOADED</div>
+
 
   <!-- Home -->
 
@@ -785,7 +785,7 @@
 
             <button
               class="listen-btn"
-              onclick="alert('Listen clicked')"
+              onclick="listenText(this.dataset.text)"
             >
               ▶ Listen
             </button>
@@ -1052,7 +1052,7 @@
 
               <button
                 class="listen-btn"
-                onclick="alert('Listen clicked')"
+                onclick="listenText(this.dataset.text)"
               >
                 ▶ Listen
               </button>
@@ -1150,7 +1150,7 @@
 
                 <button
                   class="listen-btn"
-                  onclick="alert('Listen clicked')"
+                  onclick="listenText(this.dataset.text)"
                 >
                   ▶ Listen
                 </button>
@@ -1325,9 +1325,21 @@ let vocabularyFilter = "all";
     // =========================
 
     function listenText(text) {
+      if (!text) return;
 
-      alert("Listen clicked: " + text);
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
 
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('Your browser does not support speech synthesis.');
+      }
     }
 
 
