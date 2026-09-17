@@ -785,7 +785,7 @@
 
             <button
               class="listen-btn"
-              onclick="listenText(this.dataset.text)"
+              onclick="listenButton(this)"
             >
               ▶ Listen
             </button>
@@ -1052,7 +1052,7 @@
 
               <button
                 class="listen-btn"
-                onclick="listenText(this.dataset.text)"
+                onclick="listenButton(this)"
               >
                 ▶ Listen
               </button>
@@ -1150,7 +1150,7 @@
 
                 <button
                   class="listen-btn"
-                  onclick="listenText(this.dataset.text)"
+                  onclick="listenButton(this)"
                 >
                   ▶ Listen
                 </button>
@@ -1324,22 +1324,56 @@ let vocabularyFilter = "all";
     // Browser TTS
     // =========================
 
-    function listenText(text) {
-      if (!text) return;
+    function listenButton(button) {
+      const card = button.closest(".word-card, .note-card");
 
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.9;
-        utterance.pitch = 1;
-        utterance.volume = 1;
-
-        window.speechSynthesis.speak(utterance);
-      } else {
-        alert('Your browser does not support speech synthesis.');
+      if (!card) {
+        alert("Could not find the text to read.");
+        return;
       }
+
+      const target = card.querySelector(".word, .sentence");
+      const text = target ? target.textContent.trim() : "";
+
+      listenText(text);
+    }
+
+
+    function listenText(text) {
+      if (!text) {
+        alert("No text to read.");
+        return;
+      }
+
+      if (!("speechSynthesis" in window) ||
+          typeof SpeechSynthesisUtterance === "undefined") {
+        alert("This browser does not support speech synthesis.");
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+
+      utterance.lang = "en-US";
+      utterance.rate = 0.9;
+      utterance.pitch = 1;
+      utterance.volume = 1;
+
+      utterance.onstart = function () {
+        console.log("TTS started:", text);
+      };
+
+      utterance.onend = function () {
+        console.log("TTS ended");
+      };
+
+      utterance.onerror = function (event) {
+        console.error("TTS error:", event);
+        alert("TTS error: " + (event.error || "unknown error"));
+      };
+
+      window.speechSynthesis.speak(utterance);
     }
 
 
