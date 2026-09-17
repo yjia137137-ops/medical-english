@@ -110,7 +110,9 @@
       margin-top: 4px;
     }
 
-    /* Add Note */
+    /* =========================
+       Add Note
+    ========================= */
 
     .form-card {
       display: none;
@@ -165,7 +167,9 @@
       margin-bottom: 24px;
     }
 
-    /* Lists */
+    /* =========================
+       Lists
+    ========================= */
 
     .list-page {
       display: none;
@@ -248,12 +252,14 @@
       border-color: #ccc;
     }
 
-    /* Vocabulary Filters */
+    /* =========================
+       Vocabulary Filter
+    ========================= */
 
     .filter-row {
       display: flex;
       gap: 10px;
-      margin-bottom: 24px;
+      margin-top: 20px;
       overflow-x: auto;
     }
 
@@ -295,6 +301,7 @@
   </style>
 </head>
 
+
 <body>
 
   <!-- =========================
@@ -304,12 +311,17 @@
   <div id="homePage" class="page">
 
     <div class="header">
-      <h1 class="title">Medical English</h1>
+
+      <h1 class="title">
+        Medical English
+      </h1>
 
       <div class="subtitle">
         Your clinical English notebook
       </div>
+
     </div>
+
 
     <div class="card">
 
@@ -332,7 +344,9 @@
 
       </div>
 
+
       <div class="divider"></div>
+
 
       <div class="section">
 
@@ -353,7 +367,9 @@
 
       </div>
 
+
       <div class="divider"></div>
+
 
       <div class="section">
 
@@ -375,6 +391,7 @@
       </div>
 
     </div>
+
 
     <div class="stats">
 
@@ -410,6 +427,7 @@
       ← Back
     </button>
 
+
     <div class="header">
 
       <h1 class="title">
@@ -421,6 +439,7 @@
       </div>
 
     </div>
+
 
     <div class="card">
 
@@ -460,6 +479,7 @@
           <span style="color:#999;font-size:13px;">
             (optional)
           </span>
+
         </label>
 
         <textarea
@@ -479,6 +499,7 @@
           <span style="color:#999;font-size:13px;">
             (optional)
           </span>
+
         </label>
 
         <textarea
@@ -518,6 +539,7 @@
       ← Back
     </button>
 
+
     <div class="header">
 
       <h1 class="title">
@@ -532,6 +554,7 @@
       </div>
 
     </div>
+
 
     <div id="notesList"></div>
 
@@ -554,6 +577,7 @@
       ← Back
     </button>
 
+
     <div class="header">
 
       <h1 class="title">
@@ -567,27 +591,30 @@
         0 words saved
       </div>
 
+
       <div class="filter-row">
 
         <button
-          class="filter-btn active"
           id="filterAll"
+          class="filter-btn active"
           onclick="setVocabularyFilter('all')"
         >
           All
         </button>
 
+
         <button
-          class="filter-btn"
           id="filterReview"
+          class="filter-btn"
           onclick="setVocabularyFilter('review')"
         >
           To review
         </button>
 
+
         <button
-          class="filter-btn"
           id="filterLearned"
+          class="filter-btn"
           onclick="setVocabularyFilter('learned')"
         >
           Learned
@@ -596,6 +623,7 @@
       </div>
 
     </div>
+
 
     <div id="vocabularyList"></div>
 
@@ -614,22 +642,48 @@
 
     function getNotes() {
 
-      return JSON.parse(
-        localStorage.getItem(
-          "medicalEnglishNotes"
-        ) || "[]"
-      );
+      try {
+
+        return JSON.parse(
+          localStorage.getItem(
+            "medicalEnglishNotes"
+          ) || "[]"
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Failed to read notes:",
+          error
+        );
+
+        return [];
+
+      }
 
     }
 
 
     function getVocabulary() {
 
-      return JSON.parse(
-        localStorage.getItem(
-          "medicalEnglishVocabulary"
-        ) || "[]"
-      );
+      try {
+
+        return JSON.parse(
+          localStorage.getItem(
+            "medicalEnglishVocabulary"
+          ) || "[]"
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Failed to read vocabulary:",
+          error
+        );
+
+        return [];
+
+      }
 
     }
 
@@ -663,7 +717,8 @@
 
     function setVocabularyFilter(filter) {
 
-      vocabularyFilter = filter;
+      vocabularyFilter =
+        filter;
 
 
       document
@@ -745,9 +800,11 @@
 
       hideAllPages();
 
+
       document.getElementById(
         "homePage"
       ).style.display = "block";
+
 
       updateHome();
 
@@ -757,6 +814,7 @@
     function showAddPage() {
 
       hideAllPages();
+
 
       document.getElementById(
         "addPage"
@@ -769,9 +827,11 @@
 
       hideAllPages();
 
+
       document.getElementById(
         "notesPage"
       ).style.display = "block";
+
 
       renderNotes();
 
@@ -782,9 +842,11 @@
 
       hideAllPages();
 
+
       document.getElementById(
         "vocabularyPage"
       ).style.display = "block";
+
 
       renderVocabulary();
 
@@ -797,45 +859,56 @@
 
     function updateHome() {
 
-      const notes = getNotes();
+      const notes =
+        getNotes();
+
 
       document.getElementById(
         "noteCount"
-      ).textContent = notes.length;
+      ).textContent =
+        notes.length;
 
     }
 
 
     // =========================
-    // Save Note
+    // Save Note + Vocabulary
     // =========================
 
     function saveNote() {
 
       const topic =
         document
-          .getElementById("topicInput")
+          .getElementById(
+            "topicInput"
+          )
           .value
           .trim();
 
 
       const sentence =
         document
-          .getElementById("sentenceInput")
+          .getElementById(
+            "sentenceInput"
+          )
           .value
           .trim();
 
 
       const vocabularyText =
         document
-          .getElementById("vocabularyInput")
+          .getElementById(
+            "vocabularyInput"
+          )
           .value
           .trim();
 
 
       const meaning =
         document
-          .getElementById("meaningInput")
+          .getElementById(
+            "meaningInput"
+          )
           .value
           .trim();
 
@@ -851,9 +924,12 @@
       }
 
 
-      // Save sentence
+      // =========================
+      // Save Note
+      // =========================
 
-      const notes = getNotes();
+      const notes =
+        getNotes();
 
 
       const newNote = {
@@ -862,7 +938,8 @@
           Date.now(),
 
         topic:
-          topic || "Uncategorized",
+          topic ||
+          "Uncategorized",
 
         sentence:
           sentence,
@@ -871,7 +948,8 @@
           meaning,
 
         date:
-          new Date().toLocaleDateString()
+          new Date()
+            .toLocaleDateString()
 
       };
 
@@ -886,16 +964,20 @@
       );
 
 
-      // Save vocabulary
+      // =========================
+      // Save Vocabulary
+      // =========================
 
       const words =
         vocabularyText
           .split(/[\n,，]+/)
           .map(
-            word => word.trim()
+            word =>
+              word.trim()
           )
           .filter(
-            word => word.length > 0
+            word =>
+              word.length > 0
           );
 
 
@@ -909,7 +991,10 @@
           const exists =
             vocabulary.some(
               item =>
-                item.word.toLowerCase() ===
+                item &&
+                item.word &&
+                item.word
+                  .toLowerCase() ===
                 word.toLowerCase()
             );
 
@@ -930,7 +1015,8 @@
                 "Uncategorized",
 
               date:
-                new Date().toLocaleDateString(),
+                new Date()
+                  .toLocaleDateString(),
 
               learned:
                 false
@@ -948,7 +1034,15 @@
       );
 
 
-      // Clear form
+      console.log(
+        "Saved vocabulary:",
+        words
+      );
+
+
+      // =========================
+      // Clear Form
+      // =========================
 
       document.getElementById(
         "topicInput"
@@ -1003,7 +1097,9 @@
         " sentences saved";
 
 
-      if (notes.length === 0) {
+      if (
+        notes.length === 0
+      ) {
 
         list.innerHTML =
           '<div class="empty">No sentences yet.</div>';
@@ -1023,18 +1119,25 @@
                 <div class="top-row">
 
                   <div class="topic">
-                    ${escapeHtml(note.topic)}
+                    ${escapeHtml(
+                      note.topic
+                    )}
                   </div>
 
+
                   <div class="date">
-                    ${escapeHtml(note.date)}
+                    ${escapeHtml(
+                      note.date
+                    )}
                   </div>
 
                 </div>
 
 
                 <div class="sentence">
-                  ${escapeHtml(note.sentence)}
+                  ${escapeHtml(
+                    note.sentence
+                  )}
                 </div>
 
 
@@ -1042,7 +1145,9 @@
                   note.meaning
                     ? `
                       <div class="meaning">
-                        ${escapeHtml(note.meaning)}
+                        ${escapeHtml(
+                          note.meaning
+                        )}
                       </div>
                     `
                     : ""
@@ -1053,7 +1158,9 @@
 
                   <button
                     class="listen-btn"
-                    onclick="listenText(${JSON.stringify(note.sentence)})"
+                    onclick="listenText(${JSON.stringify(
+                      note.sentence
+                    )})"
                   >
                     ▶ Listen
                   </button>
@@ -1093,11 +1200,24 @@
         );
 
 
-      // Apply filter
-
       let filteredVocabulary =
         vocabulary;
 
+
+      // All
+
+      if (
+        vocabularyFilter ===
+        "all"
+      ) {
+
+        filteredVocabulary =
+          vocabulary;
+
+      }
+
+
+      // To review
 
       if (
         vocabularyFilter ===
@@ -1113,6 +1233,8 @@
       }
 
 
+      // Learned
+
       if (
         vocabularyFilter ===
         "learned"
@@ -1127,8 +1249,6 @@
       }
 
 
-      // Update subtitle
-
       document.getElementById(
         "vocabularySubtitle"
       ).textContent =
@@ -1136,14 +1256,14 @@
         " words";
 
 
-      // Empty state
-
       if (
-        filteredVocabulary.length === 0
+        filteredVocabulary.length ===
+        0
       ) {
 
         if (
-          vocabulary.length === 0
+          vocabulary.length ===
+          0
         ) {
 
           list.innerHTML = `
@@ -1181,15 +1301,14 @@
       }
 
 
-      // Render vocabulary cards
-
       list.innerHTML =
         filteredVocabulary
           .map(
             item => {
 
               const learned =
-                item.learned === true;
+                item.learned ===
+                true;
 
 
               return `
@@ -1199,18 +1318,25 @@
                   <div class="top-row">
 
                     <div class="word">
-                      ${escapeHtml(item.word)}
+                      ${escapeHtml(
+                        item.word
+                      )}
                     </div>
 
+
                     <div class="date">
-                      ${escapeHtml(item.date)}
+                      ${escapeHtml(
+                        item.date
+                      )}
                     </div>
 
                   </div>
 
 
                   <div class="topic">
-                    ${escapeHtml(item.topic)}
+                    ${escapeHtml(
+                      item.topic
+                    )}
                   </div>
 
 
@@ -1218,14 +1344,20 @@
 
                     <button
                       class="listen-btn"
-                      onclick="listenText(${JSON.stringify(item.word)})"
+                      onclick="listenText(${JSON.stringify(
+                        item.word
+                      )})"
                     >
                       ▶ Listen
                     </button>
 
 
                     <button
-                      class="learn-btn ${learned ? "learned" : ""}"
+                      class="learn-btn ${
+                        learned
+                          ? "learned"
+                          : ""
+                      }"
                       onclick="toggleLearned(${item.id})"
                     >
                       ${
@@ -1281,7 +1413,8 @@
 
 
       item.learned =
-        item.learned !== true;
+        item.learned !==
+        true;
 
 
       saveVocabulary(
