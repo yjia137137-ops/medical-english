@@ -694,126 +694,13 @@
 
 
     function showVocabularyPage() {
-
       hideAllPages();
 
       document.getElementById(
         "vocabularyPage"
       ).style.display = "block";
 
-      function renderVocabulary() {
-
-  const vocabulary = getVocabulary();
-
-  const list =
-    document.getElementById("vocabularyList");
-
-  const subtitle =
-    document.getElementById("vocabularySubtitle");
-
-
-  // 根据当前筛选条件过滤
-  let filteredVocabulary = vocabulary;
-
-  if (vocabularyFilter === "review") {
-
-    filteredVocabulary =
-      vocabulary.filter(
-        item => item.learned !== true
-      );
-
-  }
-
-  if (vocabularyFilter === "learned") {
-
-    filteredVocabulary =
-      vocabulary.filter(
-        item => item.learned === true
-      );
-
-  }
-
-
-  subtitle.textContent =
-    filteredVocabulary.length + " words";
-
-
-  if (filteredVocabulary.length === 0) {
-
-    list.innerHTML = `
-      <div class="empty">
-
-        <div>
-          No vocabulary here.
-        </div>
-
-      </div>
-    `;
-
-    return;
-  }
-
-
-  list.innerHTML =
-    filteredVocabulary.map(item => {
-
-      const learned =
-        item.learned === true;
-
-
-      return `
-
-        <div class="word-card">
-
-          <div class="top-row">
-
-            <div class="word">
-              ${escapeHtml(item.word)}
-            </div>
-
-            <div class="date">
-              ${escapeHtml(item.date)}
-            </div>
-
-          </div>
-
-          <div class="topic">
-            ${escapeHtml(item.topic)}
-          </div>
-
-          <div class="actions">
-
-            <button
-              class="listen-btn"
-              onclick="listenButton(this)"
-            >
-              ▶ Listen
-            </button>
-
-            <button
-              class="learn-btn ${learned ? "learned" : ""}"
-              onclick="toggleLearned(${item.id})"
-            >
-              ${learned ? "✓ Learned" : "○ To review"}
-            </button>
-
-            <button
-              class="delete-btn"
-              onclick="deleteWord(${item.id})"
-            >
-              Delete
-            </button>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-}
-
+      renderVocabulary();
     }
 
 
@@ -1078,60 +965,52 @@
     // =========================
 
     function renderVocabulary() {
-
-      const vocabulary =
-        getVocabulary();
-
+      const vocabulary = getVocabulary();
 
       const list =
-        document.getElementById(
-          "vocabularyList"
-        );
+        document.getElementById("vocabularyList");
 
+      const subtitle =
+        document.getElementById("vocabularySubtitle");
 
-      document.getElementById(
-        "vocabularySubtitle"
-      ).textContent =
-        vocabulary.length +
-        " words saved";
+      let filteredVocabulary = vocabulary;
 
-
-      if (vocabulary.length === 0) {
-
-        list.innerHTML = `
-          <div class="empty">
-
-            <div>
-              No vocabulary yet.
-            </div>
-
-            <div
-              style="margin-top:10px;font-size:14px;"
-            >
-              Add useful words when saving a sentence.
-            </div>
-
-          </div>
-        `;
-
-        return;
-
+      if (vocabularyFilter === "review") {
+        filteredVocabulary =
+          vocabulary.filter(
+            item => item.learned !== true
+          );
       }
 
+      if (vocabularyFilter === "learned") {
+        filteredVocabulary =
+          vocabulary.filter(
+            item => item.learned === true
+          );
+      }
+
+      subtitle.textContent =
+        filteredVocabulary.length + " words";
+
+      if (filteredVocabulary.length === 0) {
+        list.innerHTML = `
+          <div class="empty">
+            <div>No vocabulary here.</div>
+            <div style="margin-top:10px;font-size:14px;">
+              Add useful words when saving a sentence.
+            </div>
+          </div>
+        `;
+        return;
+      }
 
       list.innerHTML =
-        vocabulary.map(item => {
-
-          const learned =
-            item.learned === true;
-
+        filteredVocabulary.map(item => {
+          const learned = item.learned === true;
 
           return `
-
             <div class="word-card">
-
               <div class="top-row">
-
                 <div class="word">
                   ${escapeHtml(item.word)}
                 </div>
@@ -1139,7 +1018,6 @@
                 <div class="date">
                   ${escapeHtml(item.date)}
                 </div>
-
               </div>
 
               <div class="topic">
@@ -1147,7 +1025,6 @@
               </div>
 
               <div class="actions">
-
                 <button
                   class="listen-btn"
                   onclick="listenButton(this)"
@@ -1168,15 +1045,39 @@
                 >
                   Delete
                 </button>
-
               </div>
-
             </div>
-
           `;
-
         }).join("");
+    }
 
+
+    // =========================
+    // Vocabulary Filter
+    // =========================
+
+    let vocabularyFilter = "all";
+
+    function setVocabularyFilter(filter) {
+      vocabularyFilter = filter;
+
+      document.getElementById("filterAll").classList.remove("active");
+      document.getElementById("filterReview").classList.remove("active");
+      document.getElementById("filterLearned").classList.remove("active");
+
+      if (filter === "all") {
+        document.getElementById("filterAll").classList.add("active");
+      }
+
+      if (filter === "review") {
+        document.getElementById("filterReview").classList.add("active");
+      }
+
+      if (filter === "learned") {
+        document.getElementById("filterLearned").classList.add("active");
+      }
+
+      renderVocabulary();
     }
 
 
@@ -1185,76 +1086,21 @@
     // =========================
 
     function toggleLearned(id) {
+      const vocabulary = getVocabulary();
 
-      const vocabulary =
-        getVocabulary();
-
-
-      const item =
-        vocabulary.find(
-          item => item.id === id
-        );
-
+      const item = vocabulary.find(
+        item => item.id === id
+      );
 
       if (!item) {
         return;
       }
 
-
-      item.learned =
-        item.learned !== true;
-
+      item.learned = item.learned !== true;
 
       saveVocabulary(vocabulary);
-let vocabularyFilter = "all";
-      function setVocabularyFilter(filter) {
 
-  vocabularyFilter = filter;
-
-
-  document.getElementById(
-    "filterAll"
-  ).classList.remove("active");
-
-  document.getElementById(
-    "filterReview"
-  ).classList.remove("active");
-
-  document.getElementById(
-    "filterLearned"
-  ).classList.remove("active");
-
-
-  if (filter === "all") {
-
-    document.getElementById(
-      "filterAll"
-    ).classList.add("active");
-
-  }
-
-  if (filter === "review") {
-
-    document.getElementById(
-      "filterReview"
-    ).classList.add("active");
-
-  }
-
-  if (filter === "learned") {
-
-    document.getElementById(
-      "filterLearned"
-    ).classList.add("active");
-
-  }
-
-
-  renderVocabulary();
-
-}
       renderVocabulary();
-
     }
 
 
