@@ -219,12 +219,14 @@
 
     .actions {
       display: flex;
+      flex-wrap: wrap;
       gap: 10px;
       margin-top: 20px;
     }
 
     .listen-btn,
-    .delete-btn {
+    .delete-btn,
+    .learn-btn {
       background: #fff;
       border: 1px solid #ddd;
       padding: 9px 16px;
@@ -234,6 +236,16 @@
 
     .delete-btn {
       color: #999;
+    }
+
+    .learn-btn {
+      color: #555;
+    }
+
+    .learn-btn.learned {
+      background: #f1f1ef;
+      color: #333;
+      border-color: #ccc;
     }
 
     .empty {
@@ -266,6 +278,7 @@
 
     <div class="header">
       <h1 class="title">Medical English</h1>
+
       <div class="subtitle">
         Your clinical English notebook
       </div>
@@ -274,6 +287,7 @@
     <div class="card">
 
       <div class="section">
+
         <div class="section-title">
           Today's learning
         </div>
@@ -288,11 +302,13 @@
         >
           ＋ Add a sentence
         </button>
+
       </div>
 
       <div class="divider"></div>
 
       <div class="section">
+
         <div class="section-title">
           Vocabulary
         </div>
@@ -307,11 +323,13 @@
         >
           Open vocabulary
         </button>
+
       </div>
 
       <div class="divider"></div>
 
       <div class="section">
+
         <div class="section-title">
           My Notes
         </div>
@@ -326,18 +344,24 @@
         >
           View my notes
         </button>
+
       </div>
 
     </div>
 
     <div class="stats">
-      <div id="noteCount" class="stats-number">
+
+      <div
+        id="noteCount"
+        class="stats-number"
+      >
         0
       </div>
 
       <div class="stats-label">
         sentences saved
       </div>
+
     </div>
 
   </div>
@@ -345,7 +369,10 @@
 
   <!-- Add Page -->
 
-  <div id="addPage" class="page form-card">
+  <div
+    id="addPage"
+    class="page form-card"
+  >
 
     <button
       class="back-btn"
@@ -355,34 +382,47 @@
     </button>
 
     <div class="header">
-      <h1 class="title">Medical English</h1>
+
+      <h1 class="title">
+        Medical English
+      </h1>
 
       <div class="subtitle">
         Add a learning note
       </div>
+
     </div>
 
     <div class="card">
 
       <div class="field">
-        <label>Topic</label>
+
+        <label>
+          Topic
+        </label>
 
         <input
           id="topicInput"
           placeholder="e.g. Ischemic Stroke"
         >
+
       </div>
 
       <div class="field">
-        <label>English sentence</label>
+
+        <label>
+          English sentence
+        </label>
 
         <textarea
           id="sentenceInput"
           placeholder="Type the sentence you want to remember..."
         ></textarea>
+
       </div>
 
       <div class="field">
+
         <label>
           Vocabulary
           <span style="color:#999;font-size:13px;">
@@ -395,9 +435,11 @@
           class="small"
           placeholder="Add useful words, one per line..."
         ></textarea>
+
       </div>
 
       <div class="field">
+
         <label>
           Your understanding
           <span style="color:#999;font-size:13px;">
@@ -410,6 +452,7 @@
           class="small"
           placeholder="中文意思、备注或临床场景..."
         ></textarea>
+
       </div>
 
       <button
@@ -426,7 +469,10 @@
 
   <!-- My Notes -->
 
-  <div id="notesPage" class="page list-page">
+  <div
+    id="notesPage"
+    class="page list-page"
+  >
 
     <button
       class="back-btn"
@@ -436,7 +482,10 @@
     </button>
 
     <div class="header">
-      <h1 class="title">My Notes</h1>
+
+      <h1 class="title">
+        My Notes
+      </h1>
 
       <div
         id="notesSubtitle"
@@ -444,6 +493,7 @@
       >
         0 sentences saved
       </div>
+
     </div>
 
     <div id="notesList"></div>
@@ -453,7 +503,10 @@
 
   <!-- Vocabulary -->
 
-  <div id="vocabularyPage" class="page list-page">
+  <div
+    id="vocabularyPage"
+    class="page list-page"
+  >
 
     <button
       class="back-btn"
@@ -463,7 +516,10 @@
     </button>
 
     <div class="header">
-      <h1 class="title">Vocabulary</h1>
+
+      <h1 class="title">
+        Vocabulary
+      </h1>
 
       <div
         id="vocabularySubtitle"
@@ -471,6 +527,7 @@
       >
         0 words saved
       </div>
+
     </div>
 
     <div id="vocabularyList"></div>
@@ -485,29 +542,44 @@
     // =========================
 
     function getNotes() {
+
       return JSON.parse(
-        localStorage.getItem("medicalEnglishNotes") || "[]"
+        localStorage.getItem(
+          "medicalEnglishNotes"
+        ) || "[]"
       );
+
     }
+
 
     function getVocabulary() {
+
       return JSON.parse(
-        localStorage.getItem("medicalEnglishVocabulary") || "[]"
+        localStorage.getItem(
+          "medicalEnglishVocabulary"
+        ) || "[]"
       );
+
     }
 
+
     function saveNotes(notes) {
+
       localStorage.setItem(
         "medicalEnglishNotes",
         JSON.stringify(notes)
       );
+
     }
 
+
     function saveVocabulary(vocabulary) {
+
       localStorage.setItem(
         "medicalEnglishVocabulary",
         JSON.stringify(vocabulary)
       );
+
     }
 
 
@@ -516,40 +588,73 @@
     // =========================
 
     function hideAllPages() {
-      document.getElementById("homePage").style.display = "none";
-      document.getElementById("addPage").style.display = "none";
-      document.getElementById("notesPage").style.display = "none";
-      document.getElementById("vocabularyPage").style.display = "none";
+
+      document.getElementById(
+        "homePage"
+      ).style.display = "none";
+
+      document.getElementById(
+        "addPage"
+      ).style.display = "none";
+
+      document.getElementById(
+        "notesPage"
+      ).style.display = "none";
+
+      document.getElementById(
+        "vocabularyPage"
+      ).style.display = "none";
+
     }
+
 
     function showHome() {
+
       hideAllPages();
 
-      document.getElementById("homePage").style.display = "block";
+      document.getElementById(
+        "homePage"
+      ).style.display = "block";
 
       updateHome();
+
     }
+
 
     function showAddPage() {
+
       hideAllPages();
 
-      document.getElementById("addPage").style.display = "block";
+      document.getElementById(
+        "addPage"
+      ).style.display = "block";
+
     }
+
 
     function showNotesPage() {
+
       hideAllPages();
 
-      document.getElementById("notesPage").style.display = "block";
+      document.getElementById(
+        "notesPage"
+      ).style.display = "block";
 
       renderNotes();
+
     }
 
+
     function showVocabularyPage() {
+
       hideAllPages();
 
-      document.getElementById("vocabularyPage").style.display = "block";
+      document.getElementById(
+        "vocabularyPage"
+      ).style.display = "block";
 
       renderVocabulary();
+
     }
 
 
@@ -561,8 +666,10 @@
 
       const notes = getNotes();
 
-      document.getElementById("noteCount").textContent =
-        notes.length;
+      document.getElementById(
+        "noteCount"
+      ).textContent = notes.length;
+
     }
 
 
@@ -573,29 +680,44 @@
     function saveNote() {
 
       const topic =
-        document.getElementById("topicInput").value.trim();
+        document.getElementById(
+          "topicInput"
+        ).value.trim();
+
 
       const sentence =
-        document.getElementById("sentenceInput").value.trim();
+        document.getElementById(
+          "sentenceInput"
+        ).value.trim();
+
 
       const vocabularyText =
-        document.getElementById("vocabularyInput").value.trim();
+        document.getElementById(
+          "vocabularyInput"
+        ).value.trim();
+
 
       const meaning =
-        document.getElementById("meaningInput").value.trim();
+        document.getElementById(
+          "meaningInput"
+        ).value.trim();
 
 
       if (!sentence) {
 
-        alert("Please enter a sentence.");
+        alert(
+          "Please enter a sentence."
+        );
 
         return;
+
       }
 
 
       // Save sentence
 
       const notes = getNotes();
+
 
       const newNote = {
 
@@ -615,6 +737,7 @@
 
       };
 
+
       notes.unshift(newNote);
 
       saveNotes(notes);
@@ -626,7 +749,9 @@
         vocabularyText
           .split(/[\n,，]+/)
           .map(word => word.trim())
-          .filter(word => word.length > 0);
+          .filter(
+            word => word.length > 0
+          );
 
 
       const vocabulary =
@@ -657,7 +782,10 @@
               topic || "Uncategorized",
 
             date:
-              new Date().toLocaleDateString()
+              new Date().toLocaleDateString(),
+
+            learned:
+              false
 
           });
 
@@ -671,18 +799,30 @@
 
       // Clear form
 
-      document.getElementById("topicInput").value = "";
+      document.getElementById(
+        "topicInput"
+      ).value = "";
 
-      document.getElementById("sentenceInput").value = "";
 
-      document.getElementById("vocabularyInput").value = "";
+      document.getElementById(
+        "sentenceInput"
+      ).value = "";
 
-      document.getElementById("meaningInput").value = "";
+
+      document.getElementById(
+        "vocabularyInput"
+      ).value = "";
+
+
+      document.getElementById(
+        "meaningInput"
+      ).value = "";
 
 
       alert("Saved.");
 
       showHome();
+
     }
 
 
@@ -694,11 +834,18 @@
 
       const notes = getNotes();
 
-      const list =
-        document.getElementById("notesList");
 
-      document.getElementById("notesSubtitle").textContent =
-        notes.length + " sentences saved";
+      const list =
+        document.getElementById(
+          "notesList"
+        );
+
+
+      document.getElementById(
+        "notesSubtitle"
+      ).textContent =
+        notes.length +
+        " sentences saved";
 
 
       if (notes.length === 0) {
@@ -707,6 +854,7 @@
           '<div class="empty">No sentences yet.</div>';
 
         return;
+
       }
 
 
@@ -762,6 +910,7 @@
           </div>
 
         `).join("");
+
     }
 
 
@@ -774,74 +923,133 @@
       const vocabulary =
         getVocabulary();
 
+
       const list =
-        document.getElementById("vocabularyList");
+        document.getElementById(
+          "vocabularyList"
+        );
 
 
       document.getElementById(
         "vocabularySubtitle"
       ).textContent =
-        vocabulary.length + " words saved";
+        vocabulary.length +
+        " words saved";
 
 
       if (vocabulary.length === 0) {
 
         list.innerHTML = `
           <div class="empty">
-            <div>No vocabulary yet.</div>
 
-            <div style="margin-top:10px;font-size:14px;">
+            <div>
+              No vocabulary yet.
+            </div>
+
+            <div
+              style="margin-top:10px;font-size:14px;"
+            >
               Add useful words when saving a sentence.
             </div>
+
           </div>
         `;
 
         return;
+
       }
 
 
       list.innerHTML =
-        vocabulary.map(item => `
+        vocabulary.map(item => {
 
-          <div class="word-card">
+          const learned =
+            item.learned === true;
 
-            <div class="top-row">
 
-              <div class="word">
-                ${escapeHtml(item.word)}
+          return `
+
+            <div class="word-card">
+
+              <div class="top-row">
+
+                <div class="word">
+                  ${escapeHtml(item.word)}
+                </div>
+
+                <div class="date">
+                  ${escapeHtml(item.date)}
+                </div>
+
               </div>
 
-              <div class="date">
-                ${escapeHtml(item.date)}
+              <div class="topic">
+                ${escapeHtml(item.topic)}
+              </div>
+
+              <div class="actions">
+
+                <button
+                  class="listen-btn"
+                  onclick="listenText(${JSON.stringify(item.word)})"
+                >
+                  ▶ Listen
+                </button>
+
+                <button
+                  class="learn-btn ${learned ? "learned" : ""}"
+                  onclick="toggleLearned(${item.id})"
+                >
+                  ${learned ? "✓ Learned" : "○ To review"}
+                </button>
+
+                <button
+                  class="delete-btn"
+                  onclick="deleteWord(${item.id})"
+                >
+                  Delete
+                </button>
+
               </div>
 
             </div>
 
-            <div class="topic">
-              ${escapeHtml(item.topic)}
-            </div>
+          `;
 
-            <div class="actions">
+        }).join("");
 
-              <button
-                class="listen-btn"
-                onclick="listenText(${JSON.stringify(item.word)})"
-              >
-                ▶ Listen
-              </button>
+    }
 
-              <button
-                class="delete-btn"
-                onclick="deleteWord(${item.id})"
-              >
-                Delete
-              </button>
 
-            </div>
+    // =========================
+    // Toggle Learned
+    // =========================
 
-          </div>
+    function toggleLearned(id) {
 
-        `).join("");
+      const vocabulary =
+        getVocabulary();
+
+
+      const item =
+        vocabulary.find(
+          item => item.id === id
+        );
+
+
+      if (!item) {
+        return;
+      }
+
+
+      item.learned =
+        item.learned !== true;
+
+
+      saveVocabulary(vocabulary);
+
+      renderVocabulary();
+
     }
 
 
@@ -873,6 +1081,7 @@
       renderNotes();
 
       updateHome();
+
     }
 
 
@@ -902,11 +1111,12 @@
       saveVocabulary(vocabulary);
 
       renderVocabulary();
+
     }
 
 
     // =========================
-    // Temporary TTS
+    // Browser TTS
     // =========================
 
     function listenText(text) {
@@ -916,13 +1126,16 @@
       }
 
 
-      if (!("speechSynthesis" in window)) {
+      if (
+        !("speechSynthesis" in window)
+      ) {
 
         alert(
           "Your browser does not support text-to-speech."
         );
 
         return;
+
       }
 
 
@@ -930,15 +1143,23 @@
 
 
       const utterance =
-        new SpeechSynthesisUtterance(text);
+        new SpeechSynthesisUtterance(
+          text
+        );
 
-      utterance.lang = "en-US";
 
-      utterance.rate = 0.9;
+      utterance.lang =
+        "en-US";
+
+
+      utterance.rate =
+        0.9;
+
 
       window.speechSynthesis.speak(
         utterance
       );
+
     }
 
 
@@ -949,12 +1170,17 @@
     function escapeHtml(text) {
 
       const div =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       div.textContent =
         text || "";
 
+
       return div.innerHTML;
+
     }
 
 
