@@ -234,10 +234,6 @@
       font-size: 14px;
     }
 
-    .listen-btn {
-      color: #444;
-    }
-
     .delete-btn {
       color: #999;
     }
@@ -251,46 +247,32 @@
       color: #333;
       border-color: #ccc;
     }
+.filter-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
 
-    /* Vocabulary Filter */
+.filter-btn {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #777;
+  padding: 9px 18px;
+  border-radius: 20px;
+  font-size: 14px;
+  white-space: nowrap;
+}
 
-    .filter-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      overflow-x: auto;
-    }
-
-    .filter-btn {
-      background: #fff;
-      border: 1px solid #ddd;
-      color: #777;
-      padding: 9px 18px;
-      border-radius: 20px;
-      font-size: 14px;
-      white-space: nowrap;
-    }
-
-    .filter-btn.active {
-      background: #222;
-      color: #fff;
-      border-color: #222;
-    }
-
+.filter-btn.active {
+  background: #222;
+  color: #fff;
+  border-color: #222;
+}
     .empty {
       text-align: center;
       color: #aaa;
       padding: 80px 20px;
-    }
-
-    /* TTS Status */
-
-    .tts-status {
-      text-align: center;
-      color: #999;
-      font-size: 13px;
-      margin-top: 15px;
-      min-height: 18px;
     }
 
     @media (max-width: 600px) {
@@ -309,27 +291,19 @@
   </style>
 </head>
 
-
 <body>
 
-  <!-- =========================
-       Home
-  ========================= -->
+  <!-- Home -->
 
   <div id="homePage" class="page">
 
     <div class="header">
-
-      <h1 class="title">
-        Medical English
-      </h1>
+      <h1 class="title">Medical English</h1>
 
       <div class="subtitle">
         Your clinical English notebook
       </div>
-
     </div>
-
 
     <div class="card">
 
@@ -352,9 +326,7 @@
 
       </div>
 
-
       <div class="divider"></div>
-
 
       <div class="section">
 
@@ -375,9 +347,7 @@
 
       </div>
 
-
       <div class="divider"></div>
-
 
       <div class="section">
 
@@ -400,7 +370,6 @@
 
     </div>
 
-
     <div class="stats">
 
       <div
@@ -419,9 +388,7 @@
   </div>
 
 
-  <!-- =========================
-       Add Page
-  ========================= -->
+  <!-- Add Page -->
 
   <div
     id="addPage"
@@ -435,7 +402,6 @@
       ← Back
     </button>
 
-
     <div class="header">
 
       <h1 class="title">
@@ -447,7 +413,6 @@
       </div>
 
     </div>
-
 
     <div class="card">
 
@@ -464,7 +429,6 @@
 
       </div>
 
-
       <div class="field">
 
         <label>
@@ -478,16 +442,13 @@
 
       </div>
 
-
       <div class="field">
 
         <label>
           Vocabulary
-
           <span style="color:#999;font-size:13px;">
             (optional)
           </span>
-
         </label>
 
         <textarea
@@ -498,16 +459,13 @@
 
       </div>
 
-
       <div class="field">
 
         <label>
           Your understanding
-
           <span style="color:#999;font-size:13px;">
             (optional)
           </span>
-
         </label>
 
         <textarea
@@ -517,7 +475,6 @@
         ></textarea>
 
       </div>
-
 
       <button
         class="save-btn"
@@ -531,9 +488,7 @@
   </div>
 
 
-  <!-- =========================
-       My Notes
-  ========================= -->
+  <!-- My Notes -->
 
   <div
     id="notesPage"
@@ -546,7 +501,6 @@
     >
       ← Back
     </button>
-
 
     <div class="header">
 
@@ -563,15 +517,12 @@
 
     </div>
 
-
     <div id="notesList"></div>
 
   </div>
 
 
-  <!-- =========================
-       Vocabulary
-  ========================= -->
+  <!-- Vocabulary -->
 
   <div
     id="vocabularyPage"
@@ -585,7 +536,6 @@
       ← Back
     </button>
 
-
     <div class="header">
 
       <h1 class="title">
@@ -598,57 +548,39 @@
       >
         0 words saved
       </div>
+<div class="filter-row">
 
+  <button
+    class="filter-btn active"
+    id="filterAll"
+    onclick="setVocabularyFilter('all')"
+  >
+    All
+  </button>
 
-      <div class="filter-row">
+  <button
+    class="filter-btn"
+    id="filterReview"
+    onclick="setVocabularyFilter('review')"
+  >
+    To review
+  </button>
 
-        <button
-          id="filterAll"
-          class="filter-btn active"
-          onclick="setVocabularyFilter('all')"
-        >
-          All
-        </button>
+  <button
+    class="filter-btn"
+    id="filterLearned"
+    onclick="setVocabularyFilter('learned')"
+  >
+    Learned
+  </button>
 
-
-        <button
-          id="filterReview"
-          class="filter-btn"
-          onclick="setVocabularyFilter('review')"
-        >
-          To review
-        </button>
-
-
-        <button
-          id="filterLearned"
-          class="filter-btn"
-          onclick="setVocabularyFilter('learned')"
-        >
-          Learned
-        </button>
-
-      </div>
-
+</div>
     </div>
-
 
     <div id="vocabularyList"></div>
 
   </div>
 
-
-  <!-- TTS Status -->
-
-  <div
-    id="ttsStatus"
-    class="tts-status"
-  ></div>
-
-
-  <!-- =========================
-       JavaScript
-  ========================= -->
 
   <script>
 
@@ -658,48 +590,22 @@
 
     function getNotes() {
 
-      try {
-
-        return JSON.parse(
-          localStorage.getItem(
-            "medicalEnglishNotes"
-          ) || "[]"
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Failed to read notes:",
-          error
-        );
-
-        return [];
-
-      }
+      return JSON.parse(
+        localStorage.getItem(
+          "medicalEnglishNotes"
+        ) || "[]"
+      );
 
     }
 
 
     function getVocabulary() {
 
-      try {
-
-        return JSON.parse(
-          localStorage.getItem(
-            "medicalEnglishVocabulary"
-          ) || "[]"
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Failed to read vocabulary:",
-          error
-        );
-
-        return [];
-
-      }
+      return JSON.parse(
+        localStorage.getItem(
+          "medicalEnglishVocabulary"
+        ) || "[]"
+      );
 
     }
 
@@ -725,67 +631,7 @@
 
 
     // =========================
-    // Vocabulary Filter
-    // =========================
-
-    let vocabularyFilter = "all";
-
-
-    function setVocabularyFilter(filter) {
-
-      vocabularyFilter =
-        filter;
-
-
-      document
-        .getElementById("filterAll")
-        .classList.remove("active");
-
-
-      document
-        .getElementById("filterReview")
-        .classList.remove("active");
-
-
-      document
-        .getElementById("filterLearned")
-        .classList.remove("active");
-
-
-      if (filter === "all") {
-
-        document
-          .getElementById("filterAll")
-          .classList.add("active");
-
-      }
-
-
-      if (filter === "review") {
-
-        document
-          .getElementById("filterReview")
-          .classList.add("active");
-
-      }
-
-
-      if (filter === "learned") {
-
-        document
-          .getElementById("filterLearned")
-          .classList.add("active");
-
-      }
-
-
-      renderVocabulary();
-
-    }
-
-
-    // =========================
-    // Page Navigation
+    // Page navigation
     // =========================
 
     function hideAllPages() {
@@ -794,16 +640,13 @@
         "homePage"
       ).style.display = "none";
 
-
       document.getElementById(
         "addPage"
       ).style.display = "none";
 
-
       document.getElementById(
         "notesPage"
       ).style.display = "none";
-
 
       document.getElementById(
         "vocabularyPage"
@@ -816,11 +659,9 @@
 
       hideAllPages();
 
-
       document.getElementById(
         "homePage"
       ).style.display = "block";
-
 
       updateHome();
 
@@ -830,7 +671,6 @@
     function showAddPage() {
 
       hideAllPages();
-
 
       document.getElementById(
         "addPage"
@@ -843,11 +683,9 @@
 
       hideAllPages();
 
-
       document.getElementById(
         "notesPage"
       ).style.display = "block";
-
 
       renderNotes();
 
@@ -858,13 +696,122 @@
 
       hideAllPages();
 
-
       document.getElementById(
         "vocabularyPage"
       ).style.display = "block";
 
+      function renderVocabulary() {
 
-      renderVocabulary();
+  const vocabulary = getVocabulary();
+
+  const list =
+    document.getElementById("vocabularyList");
+
+  const subtitle =
+    document.getElementById("vocabularySubtitle");
+
+
+  // 根据当前筛选条件过滤
+  let filteredVocabulary = vocabulary;
+
+  if (vocabularyFilter === "review") {
+
+    filteredVocabulary =
+      vocabulary.filter(
+        item => item.learned !== true
+      );
+
+  }
+
+  if (vocabularyFilter === "learned") {
+
+    filteredVocabulary =
+      vocabulary.filter(
+        item => item.learned === true
+      );
+
+  }
+
+
+  subtitle.textContent =
+    filteredVocabulary.length + " words";
+
+
+  if (filteredVocabulary.length === 0) {
+
+    list.innerHTML = `
+      <div class="empty">
+
+        <div>
+          No vocabulary here.
+        </div>
+
+      </div>
+    `;
+
+    return;
+  }
+
+
+  list.innerHTML =
+    filteredVocabulary.map(item => {
+
+      const learned =
+        item.learned === true;
+
+
+      return `
+
+        <div class="word-card">
+
+          <div class="top-row">
+
+            <div class="word">
+              ${escapeHtml(item.word)}
+            </div>
+
+            <div class="date">
+              ${escapeHtml(item.date)}
+            </div>
+
+          </div>
+
+          <div class="topic">
+            ${escapeHtml(item.topic)}
+          </div>
+
+          <div class="actions">
+
+            <button
+              class="listen-btn"
+              onclick="listenText(${JSON.stringify(item.word)})"
+            >
+              ▶ Listen
+            </button>
+
+            <button
+              class="learn-btn ${learned ? "learned" : ""}"
+              onclick="toggleLearned(${item.id})"
+            >
+              ${learned ? "✓ Learned" : "○ To review"}
+            </button>
+
+            <button
+              class="delete-btn"
+              onclick="deleteWord(${item.id})"
+            >
+              Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
 
     }
 
@@ -875,14 +822,11 @@
 
     function updateHome() {
 
-      const notes =
-        getNotes();
-
+      const notes = getNotes();
 
       document.getElementById(
         "noteCount"
-      ).textContent =
-        notes.length;
+      ).textContent = notes.length;
 
     }
 
@@ -894,39 +838,27 @@
     function saveNote() {
 
       const topic =
-        document
-          .getElementById(
-            "topicInput"
-          )
-          .value
-          .trim();
+        document.getElementById(
+          "topicInput"
+        ).value.trim();
 
 
       const sentence =
-        document
-          .getElementById(
-            "sentenceInput"
-          )
-          .value
-          .trim();
+        document.getElementById(
+          "sentenceInput"
+        ).value.trim();
 
 
       const vocabularyText =
-        document
-          .getElementById(
-            "vocabularyInput"
-          )
-          .value
-          .trim();
+        document.getElementById(
+          "vocabularyInput"
+        ).value.trim();
 
 
       const meaning =
-        document
-          .getElementById(
-            "meaningInput"
-          )
-          .value
-          .trim();
+        document.getElementById(
+          "meaningInput"
+        ).value.trim();
 
 
       if (!sentence) {
@@ -942,18 +874,15 @@
 
       // Save sentence
 
-      const notes =
-        getNotes();
+      const notes = getNotes();
 
 
       const newNote = {
 
-        id:
-          Date.now(),
+        id: Date.now(),
 
         topic:
-          topic ||
-          "Uncategorized",
+          topic || "Uncategorized",
 
         sentence:
           sentence,
@@ -962,20 +891,14 @@
           meaning,
 
         date:
-          new Date()
-            .toLocaleDateString()
+          new Date().toLocaleDateString()
 
       };
 
 
-      notes.unshift(
-        newNote
-      );
+      notes.unshift(newNote);
 
-
-      saveNotes(
-        notes
-      );
+      saveNotes(notes);
 
 
       // Save vocabulary
@@ -983,13 +906,9 @@
       const words =
         vocabularyText
           .split(/[\n,，]+/)
-          .map(
-            word =>
-              word.trim()
-          )
+          .map(word => word.trim())
           .filter(
-            word =>
-              word.length > 0
+            word => word.length > 0
           );
 
 
@@ -997,53 +916,43 @@
         getVocabulary();
 
 
-      words.forEach(
-        word => {
+      words.forEach(word => {
 
-          const exists =
-            vocabulary.some(
-              item =>
-                item &&
-                item.word &&
-                item.word
-                  .toLowerCase() ===
-                word.toLowerCase()
-            );
+        const exists =
+          vocabulary.some(item =>
+            item.word.toLowerCase() ===
+            word.toLowerCase()
+          );
 
 
-          if (!exists) {
+        if (!exists) {
 
-            vocabulary.unshift({
+          vocabulary.unshift({
 
-              id:
-                Date.now() +
-                Math.random(),
+            id:
+              Date.now() +
+              Math.random(),
 
-              word:
-                word,
+            word:
+              word,
 
-              topic:
-                topic ||
-                "Uncategorized",
+            topic:
+              topic || "Uncategorized",
 
-              date:
-                new Date()
-                  .toLocaleDateString(),
+            date:
+              new Date().toLocaleDateString(),
 
-              learned:
-                false
+            learned:
+              false
 
-            });
-
-          }
+          });
 
         }
-      );
+
+      });
 
 
-      saveVocabulary(
-        vocabulary
-      );
+      saveVocabulary(vocabulary);
 
 
       // Clear form
@@ -1068,10 +977,7 @@
       ).value = "";
 
 
-      alert(
-        "Saved."
-      );
-
+      alert("Saved.");
 
       showHome();
 
@@ -1084,8 +990,7 @@
 
     function renderNotes() {
 
-      const notes =
-        getNotes();
+      const notes = getNotes();
 
 
       const list =
@@ -1101,9 +1006,7 @@
         " sentences saved";
 
 
-      if (
-        notes.length === 0
-      ) {
+      if (notes.length === 0) {
 
         list.innerHTML =
           '<div class="empty">No sentences yet.</div>';
@@ -1114,76 +1017,57 @@
 
 
       list.innerHTML =
-        notes
-          .map(
-            note => `
+        notes.map(note => `
 
-              <div class="note-card">
+          <div class="note-card">
 
-                <div class="top-row">
+            <div class="top-row">
 
-                  <div class="topic">
-                    ${escapeHtml(
-                      note.topic
-                    )}
-                  </div>
-
-
-                  <div class="date">
-                    ${escapeHtml(
-                      note.date
-                    )}
-                  </div>
-
-                </div>
-
-
-                <div class="sentence">
-                  ${escapeHtml(
-                    note.sentence
-                  )}
-                </div>
-
-
-                ${
-                  note.meaning
-                    ? `
-                      <div class="meaning">
-                        ${escapeHtml(
-                          note.meaning
-                        )}
-                      </div>
-                    `
-                    : ""
-                }
-
-
-                <div class="actions">
-
-                  <button
-                    class="listen-btn"
-                    onclick="listenText(${JSON.stringify(
-                      note.sentence
-                    )})"
-                  >
-                    ▶ Listen
-                  </button>
-
-
-                  <button
-                    class="delete-btn"
-                    onclick="deleteNote(${note.id})"
-                  >
-                    Delete
-                  </button>
-
-                </div>
-
+              <div class="topic">
+                ${escapeHtml(note.topic)}
               </div>
 
-            `
-          )
-          .join("");
+              <div class="date">
+                ${escapeHtml(note.date)}
+              </div>
+
+            </div>
+
+            <div class="sentence">
+              ${escapeHtml(note.sentence)}
+            </div>
+
+            ${
+              note.meaning
+              ? `
+                <div class="meaning">
+                  ${escapeHtml(note.meaning)}
+                </div>
+              `
+              : ""
+            }
+
+            <div class="actions">
+
+              <button
+                class="listen-btn"
+                onclick="listenText(${JSON.stringify(note.sentence)})"
+              >
+                ▶ Listen
+              </button>
+
+              <button
+                class="delete-btn"
+                onclick="deleteNote(${note.id})"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </div>
+
+        `).join("");
 
     }
 
@@ -1204,84 +1088,30 @@
         );
 
 
-      let filteredVocabulary =
-        vocabulary;
-
-
-      if (
-        vocabularyFilter ===
-        "review"
-      ) {
-
-        filteredVocabulary =
-          vocabulary.filter(
-            item =>
-              item.learned !== true
-          );
-
-      }
-
-
-      if (
-        vocabularyFilter ===
-        "learned"
-      ) {
-
-        filteredVocabulary =
-          vocabulary.filter(
-            item =>
-              item.learned === true
-          );
-
-      }
-
-
       document.getElementById(
         "vocabularySubtitle"
       ).textContent =
-        filteredVocabulary.length +
-        " words";
+        vocabulary.length +
+        " words saved";
 
 
-      if (
-        filteredVocabulary.length ===
-        0
-      ) {
+      if (vocabulary.length === 0) {
 
-        if (
-          vocabulary.length ===
-          0
-        ) {
+        list.innerHTML = `
+          <div class="empty">
 
-          list.innerHTML = `
-
-            <div class="empty">
-
-              <div>
-                No vocabulary yet.
-              </div>
-
-              <div
-                style="margin-top:10px;font-size:14px;"
-              >
-                Add useful words when saving a sentence.
-              </div>
-
+            <div>
+              No vocabulary yet.
             </div>
 
-          `;
-
-        } else {
-
-          list.innerHTML = `
-
-            <div class="empty">
-              No vocabulary here.
+            <div
+              style="margin-top:10px;font-size:14px;"
+            >
+              Add useful words when saving a sentence.
             </div>
 
-          `;
-
-        }
+          </div>
+        `;
 
         return;
 
@@ -1289,88 +1119,62 @@
 
 
       list.innerHTML =
-        filteredVocabulary
-          .map(
-            item => {
+        vocabulary.map(item => {
 
-              const learned =
-                item.learned ===
-                true;
+          const learned =
+            item.learned === true;
 
 
-              return `
+          return `
 
-                <div class="word-card">
+            <div class="word-card">
 
-                  <div class="top-row">
+              <div class="top-row">
 
-                    <div class="word">
-                      ${escapeHtml(
-                        item.word
-                      )}
-                    </div>
-
-
-                    <div class="date">
-                      ${escapeHtml(
-                        item.date
-                      )}
-                    </div>
-
-                  </div>
-
-
-                  <div class="topic">
-                    ${escapeHtml(
-                      item.topic
-                    )}
-                  </div>
-
-
-                  <div class="actions">
-
-                    <button
-                      class="listen-btn"
-                      onclick="listenText(${JSON.stringify(
-                        item.word
-                      )})"
-                    >
-                      ▶ Listen
-                    </button>
-
-
-                    <button
-                      class="learn-btn ${
-                        learned
-                          ? "learned"
-                          : ""
-                      }"
-                      onclick="toggleLearned(${item.id})"
-                    >
-                      ${
-                        learned
-                          ? "✓ Learned"
-                          : "○ To review"
-                      }
-                    </button>
-
-
-                    <button
-                      class="delete-btn"
-                      onclick="deleteWord(${item.id})"
-                    >
-                      Delete
-                    </button>
-
-                  </div>
-
+                <div class="word">
+                  ${escapeHtml(item.word)}
                 </div>
 
-              `;
+                <div class="date">
+                  ${escapeHtml(item.date)}
+                </div>
 
-            }
-          )
-          .join("");
+              </div>
+
+              <div class="topic">
+                ${escapeHtml(item.topic)}
+              </div>
+
+              <div class="actions">
+
+                <button
+                  class="listen-btn"
+                  onclick="listenText(${JSON.stringify(item.word)})"
+                >
+                  ▶ Listen
+                </button>
+
+                <button
+                  class="learn-btn ${learned ? "learned" : ""}"
+                  onclick="toggleLearned(${item.id})"
+                >
+                  ${learned ? "✓ Learned" : "○ To review"}
+                </button>
+
+                <button
+                  class="delete-btn"
+                  onclick="deleteWord(${item.id})"
+                >
+                  Delete
+                </button>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }).join("");
 
     }
 
@@ -1387,28 +1191,67 @@
 
       const item =
         vocabulary.find(
-          item =>
-            item.id === id
+          item => item.id === id
         );
 
 
       if (!item) {
-
         return;
-
       }
 
 
       item.learned =
-        item.learned !==
-        true;
+        item.learned !== true;
 
 
-      saveVocabulary(
-        vocabulary
-      );
+      saveVocabulary(vocabulary);
+let vocabularyFilter = "all";
+      function setVocabularyFilter(filter) {
+
+  vocabularyFilter = filter;
 
 
+  document.getElementById(
+    "filterAll"
+  ).classList.remove("active");
+
+  document.getElementById(
+    "filterReview"
+  ).classList.remove("active");
+
+  document.getElementById(
+    "filterLearned"
+  ).classList.remove("active");
+
+
+  if (filter === "all") {
+
+    document.getElementById(
+      "filterAll"
+    ).classList.add("active");
+
+  }
+
+  if (filter === "review") {
+
+    document.getElementById(
+      "filterReview"
+    ).classList.add("active");
+
+  }
+
+  if (filter === "learned") {
+
+    document.getElementById(
+      "filterLearned"
+    ).classList.add("active");
+
+  }
+
+
+  renderVocabulary();
+
+}
       renderVocabulary();
 
     }
@@ -1427,23 +1270,17 @@
 
 
       if (!confirmed) {
-
         return;
-
       }
 
 
       const notes =
         getNotes().filter(
-          item =>
-            item.id !== id
+          item => item.id !== id
         );
 
 
-      saveNotes(
-        notes
-      );
-
+      saveNotes(notes);
 
       renderNotes();
 
@@ -1465,23 +1302,17 @@
 
 
       if (!confirmed) {
-
         return;
-
       }
 
 
       const vocabulary =
         getVocabulary().filter(
-          item =>
-            item.id !== id
+          item => item.id !== id
         );
 
 
-      saveVocabulary(
-        vocabulary
-      );
-
+      saveVocabulary(vocabulary);
 
       renderVocabulary();
 
@@ -1492,344 +1323,9 @@
     // Browser TTS
     // =========================
 
-    let availableVoices = [];
-
-
-    function loadVoices() {
-
-      if (
-        !("speechSynthesis" in window)
-      ) {
-
-        return;
-
-      }
-
-
-      availableVoices =
-        window.speechSynthesis
-          .getVoices();
-
-    }
-
-
-    if (
-      "speechSynthesis" in window
-    ) {
-
-      loadVoices();
-
-
-      window.speechSynthesis
-        .addEventListener(
-          "voiceschanged",
-          loadVoices
-        );
-
-    }
-
-
-    function getEnglishVoice() {
-
-      if (
-        !availableVoices ||
-        availableVoices.length === 0
-      ) {
-
-        return null;
-
-      }
-
-
-      // Prefer US English
-
-      let voice =
-        availableVoices.find(
-          voice =>
-            voice.lang &&
-            voice.lang
-              .toLowerCase() ===
-            "en-us"
-        );
-
-
-      if (voice) {
-
-        return voice;
-
-      }
-
-
-      // Then UK English
-
-      voice =
-        availableVoices.find(
-          voice =>
-            voice.lang &&
-            voice.lang
-              .toLowerCase() ===
-            "en-gb"
-        );
-
-
-      if (voice) {
-
-        return voice;
-
-      }
-
-
-      // Then any English voice
-
-      voice =
-        availableVoices.find(
-          voice =>
-            voice.lang &&
-            voice.lang
-              .toLowerCase()
-              .startsWith("en")
-        );
-
-
-      return voice || null;
-
-    }
-
-
-    function speakNow(text) {
-
-      if (!text) {
-
-        return;
-
-      }
-
-
-      if (
-        !("speechSynthesis" in window)
-      ) {
-
-        alert(
-          "Your browser does not support text-to-speech."
-        );
-
-        return;
-
-      }
-
-
-      const status =
-        document.getElementById(
-          "ttsStatus"
-        );
-
-
-      window.speechSynthesis.cancel();
-
-
-      const utterance =
-        new SpeechSynthesisUtterance(
-          text
-        );
-
-
-      utterance.lang =
-        "en-US";
-
-
-      utterance.rate =
-        0.9;
-
-
-      utterance.pitch =
-        1;
-
-
-      const voice =
-        getEnglishVoice();
-
-
-      if (voice) {
-
-        utterance.voice =
-          voice;
-
-      }
-
-
-      utterance.onstart =
-        function () {
-
-          status.textContent =
-            "Playing...";
-
-        };
-
-
-      utterance.onend =
-        function () {
-
-          status.textContent =
-            "";
-
-        };
-
-
-      utterance.onerror =
-        function (event) {
-
-          console.error(
-            "Speech synthesis error:",
-            event
-          );
-
-          status.textContent =
-            "Unable to play audio.";
-
-        };
-
-
-      window.speechSynthesis
-        .speak(
-          utterance
-        );
-
-    }
-
-
     function listenText(text) {
 
-      if (!text) {
-
-        return;
-
-      }
-
-
-      if (
-        !("speechSynthesis" in window)
-      ) {
-
-        alert(
-          "Your browser does not support text-to-speech."
-        );
-
-        return;
-
-      }
-
-
-      loadVoices();
-
-
-      // If voices are already available,
-      // speak immediately.
-
-      if (
-        availableVoices.length > 0
-      ) {
-
-        speakNow(text);
-
-        return;
-
-      }
-
-
-      // Some browsers load voices
-      // asynchronously.
-
-      let spoken = false;
-
-
-      const speakOnce =
-        function () {
-
-          if (spoken) {
-
-            return;
-
-          }
-
-
-          loadVoices();
-
-
-          if (
-            availableVoices.length === 0
-          ) {
-
-            return;
-
-          }
-
-
-          spoken = true;
-
-
-          window.speechSynthesis
-            .removeEventListener(
-              "voiceschanged",
-              speakOnce
-            );
-
-
-          speakNow(text);
-
-        };
-
-
-      window.speechSynthesis
-        .addEventListener(
-          "voiceschanged",
-          speakOnce
-        );
-
-
-      // Try again shortly in case
-      // voiceschanged has already fired.
-
-      setTimeout(
-        function () {
-
-          if (spoken) {
-
-            return;
-
-          }
-
-
-          loadVoices();
-
-
-          if (
-            availableVoices.length > 0
-          ) {
-
-            spoken = true;
-
-
-            window.speechSynthesis
-              .removeEventListener(
-                "voiceschanged",
-                speakOnce
-              );
-
-
-            speakNow(text);
-
-          } else {
-
-            document.getElementById(
-              "ttsStatus"
-            ).textContent =
-              "No browser voice is available.";
-
-          }
-
-        },
-        500
-      );
+      alert("Listen clicked: " + text);
 
     }
 
@@ -1856,7 +1352,7 @@
 
 
     // =========================
-    // Initial Load
+    // Initial load
     // =========================
 
     showHome();
