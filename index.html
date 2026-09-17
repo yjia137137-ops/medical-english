@@ -110,9 +110,7 @@
       margin-top: 4px;
     }
 
-    /* =========================
-       Add Note
-    ========================= */
+    /* Add Note */
 
     .form-card {
       display: none;
@@ -167,9 +165,7 @@
       margin-bottom: 24px;
     }
 
-    /* =========================
-       Lists
-    ========================= */
+    /* Lists */
 
     .list-page {
       display: none;
@@ -238,6 +234,10 @@
       font-size: 14px;
     }
 
+    .listen-btn {
+      color: #444;
+    }
+
     .delete-btn {
       color: #999;
     }
@@ -252,9 +252,7 @@
       border-color: #ccc;
     }
 
-    /* =========================
-       Vocabulary Filter
-    ========================= */
+    /* Vocabulary Filter */
 
     .filter-row {
       display: flex;
@@ -283,6 +281,16 @@
       text-align: center;
       color: #aaa;
       padding: 80px 20px;
+    }
+
+    /* TTS Status */
+
+    .tts-status {
+      text-align: center;
+      color: #999;
+      font-size: 13px;
+      margin-top: 15px;
+      min-height: 18px;
     }
 
     @media (max-width: 600px) {
@@ -630,6 +638,14 @@
   </div>
 
 
+  <!-- TTS Status -->
+
+  <div
+    id="ttsStatus"
+    class="tts-status"
+  ></div>
+
+
   <!-- =========================
        JavaScript
   ========================= -->
@@ -872,7 +888,7 @@
 
 
     // =========================
-    // Save Note + Vocabulary
+    // Save Note
     // =========================
 
     function saveNote() {
@@ -924,9 +940,7 @@
       }
 
 
-      // =========================
-      // Save Note
-      // =========================
+      // Save sentence
 
       const notes =
         getNotes();
@@ -964,9 +978,7 @@
       );
 
 
-      // =========================
-      // Save Vocabulary
-      // =========================
+      // Save vocabulary
 
       const words =
         vocabularyText
@@ -1034,15 +1046,7 @@
       );
 
 
-      console.log(
-        "Saved vocabulary:",
-        words
-      );
-
-
-      // =========================
-      // Clear Form
-      // =========================
+      // Clear form
 
       document.getElementById(
         "topicInput"
@@ -1204,21 +1208,6 @@
         vocabulary;
 
 
-      // All
-
-      if (
-        vocabularyFilter ===
-        "all"
-      ) {
-
-        filteredVocabulary =
-          vocabulary;
-
-      }
-
-
-      // To review
-
       if (
         vocabularyFilter ===
         "review"
@@ -1232,8 +1221,6 @@
 
       }
 
-
-      // Learned
 
       if (
         vocabularyFilter ===
@@ -1505,6 +1492,211 @@
     // Browser TTS
     // =========================
 
+    let availableVoices = [];
+
+
+    function loadVoices() {
+
+      if (
+        !("speechSynthesis" in window)
+      ) {
+
+        return;
+
+      }
+
+
+      availableVoices =
+        window.speechSynthesis
+          .getVoices();
+
+    }
+
+
+    if (
+      "speechSynthesis" in window
+    ) {
+
+      loadVoices();
+
+
+      window.speechSynthesis
+        .addEventListener(
+          "voiceschanged",
+          loadVoices
+        );
+
+    }
+
+
+    function getEnglishVoice() {
+
+      if (
+        !availableVoices ||
+        availableVoices.length === 0
+      ) {
+
+        return null;
+
+      }
+
+
+      // Prefer US English
+
+      let voice =
+        availableVoices.find(
+          voice =>
+            voice.lang &&
+            voice.lang
+              .toLowerCase() ===
+            "en-us"
+        );
+
+
+      if (voice) {
+
+        return voice;
+
+      }
+
+
+      // Then UK English
+
+      voice =
+        availableVoices.find(
+          voice =>
+            voice.lang &&
+            voice.lang
+              .toLowerCase() ===
+            "en-gb"
+        );
+
+
+      if (voice) {
+
+        return voice;
+
+      }
+
+
+      // Then any English voice
+
+      voice =
+        availableVoices.find(
+          voice =>
+            voice.lang &&
+            voice.lang
+              .toLowerCase()
+              .startsWith("en")
+        );
+
+
+      return voice || null;
+
+    }
+
+
+    function speakNow(text) {
+
+      if (!text) {
+
+        return;
+
+      }
+
+
+      if (
+        !("speechSynthesis" in window)
+      ) {
+
+        alert(
+          "Your browser does not support text-to-speech."
+        );
+
+        return;
+
+      }
+
+
+      const status =
+        document.getElementById(
+          "ttsStatus"
+        );
+
+
+      window.speechSynthesis.cancel();
+
+
+      const utterance =
+        new SpeechSynthesisUtterance(
+          text
+        );
+
+
+      utterance.lang =
+        "en-US";
+
+
+      utterance.rate =
+        0.9;
+
+
+      utterance.pitch =
+        1;
+
+
+      const voice =
+        getEnglishVoice();
+
+
+      if (voice) {
+
+        utterance.voice =
+          voice;
+
+      }
+
+
+      utterance.onstart =
+        function () {
+
+          status.textContent =
+            "Playing...";
+
+        };
+
+
+      utterance.onend =
+        function () {
+
+          status.textContent =
+            "";
+
+        };
+
+
+      utterance.onerror =
+        function (event) {
+
+          console.error(
+            "Speech synthesis error:",
+            event
+          );
+
+          status.textContent =
+            "Unable to play audio.";
+
+        };
+
+
+      window.speechSynthesis
+        .speak(
+          utterance
+        );
+
+    }
+
+
     function listenText(text) {
 
       if (!text) {
@@ -1527,25 +1719,116 @@
       }
 
 
-      window.speechSynthesis.cancel();
+      loadVoices();
 
 
-      const utterance =
-        new SpeechSynthesisUtterance(
-          text
+      // If voices are already available,
+      // speak immediately.
+
+      if (
+        availableVoices.length > 0
+      ) {
+
+        speakNow(text);
+
+        return;
+
+      }
+
+
+      // Some browsers load voices
+      // asynchronously.
+
+      let spoken = false;
+
+
+      const speakOnce =
+        function () {
+
+          if (spoken) {
+
+            return;
+
+          }
+
+
+          loadVoices();
+
+
+          if (
+            availableVoices.length === 0
+          ) {
+
+            return;
+
+          }
+
+
+          spoken = true;
+
+
+          window.speechSynthesis
+            .removeEventListener(
+              "voiceschanged",
+              speakOnce
+            );
+
+
+          speakNow(text);
+
+        };
+
+
+      window.speechSynthesis
+        .addEventListener(
+          "voiceschanged",
+          speakOnce
         );
 
 
-      utterance.lang =
-        "en-US";
+      // Try again shortly in case
+      // voiceschanged has already fired.
+
+      setTimeout(
+        function () {
+
+          if (spoken) {
+
+            return;
+
+          }
 
 
-      utterance.rate =
-        0.9;
+          loadVoices();
 
 
-      window.speechSynthesis.speak(
-        utterance
+          if (
+            availableVoices.length > 0
+          ) {
+
+            spoken = true;
+
+
+            window.speechSynthesis
+              .removeEventListener(
+                "voiceschanged",
+                speakOnce
+              );
+
+
+            speakNow(text);
+
+          } else {
+
+            document.getElementById(
+              "ttsStatus"
+            ).textContent =
+              "No browser voice is available.";
+
+          }
+
+        },
+        500
       );
 
     }
