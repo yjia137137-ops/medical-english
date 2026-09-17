@@ -247,7 +247,28 @@
       color: #333;
       border-color: #ccc;
     }
+.filter-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
 
+.filter-btn {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #777;
+  padding: 9px 18px;
+  border-radius: 20px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.filter-btn.active {
+  background: #222;
+  color: #fff;
+  border-color: #222;
+}
     .empty {
       text-align: center;
       color: #aaa;
@@ -527,7 +548,33 @@
       >
         0 words saved
       </div>
+<div class="filter-row">
 
+  <button
+    class="filter-btn active"
+    id="filterAll"
+    onclick="setVocabularyFilter('all')"
+  >
+    All
+  </button>
+
+  <button
+    class="filter-btn"
+    id="filterReview"
+    onclick="setVocabularyFilter('review')"
+  >
+    To review
+  </button>
+
+  <button
+    class="filter-btn"
+    id="filterLearned"
+    onclick="setVocabularyFilter('learned')"
+  >
+    Learned
+  </button>
+
+</div>
     </div>
 
     <div id="vocabularyList"></div>
@@ -653,7 +700,118 @@
         "vocabularyPage"
       ).style.display = "block";
 
-      renderVocabulary();
+      function renderVocabulary() {
+
+  const vocabulary = getVocabulary();
+
+  const list =
+    document.getElementById("vocabularyList");
+
+  const subtitle =
+    document.getElementById("vocabularySubtitle");
+
+
+  // 根据当前筛选条件过滤
+  let filteredVocabulary = vocabulary;
+
+  if (vocabularyFilter === "review") {
+
+    filteredVocabulary =
+      vocabulary.filter(
+        item => item.learned !== true
+      );
+
+  }
+
+  if (vocabularyFilter === "learned") {
+
+    filteredVocabulary =
+      vocabulary.filter(
+        item => item.learned === true
+      );
+
+  }
+
+
+  subtitle.textContent =
+    filteredVocabulary.length + " words";
+
+
+  if (filteredVocabulary.length === 0) {
+
+    list.innerHTML = `
+      <div class="empty">
+
+        <div>
+          No vocabulary here.
+        </div>
+
+      </div>
+    `;
+
+    return;
+  }
+
+
+  list.innerHTML =
+    filteredVocabulary.map(item => {
+
+      const learned =
+        item.learned === true;
+
+
+      return `
+
+        <div class="word-card">
+
+          <div class="top-row">
+
+            <div class="word">
+              ${escapeHtml(item.word)}
+            </div>
+
+            <div class="date">
+              ${escapeHtml(item.date)}
+            </div>
+
+          </div>
+
+          <div class="topic">
+            ${escapeHtml(item.topic)}
+          </div>
+
+          <div class="actions">
+
+            <button
+              class="listen-btn"
+              onclick="listenText(${JSON.stringify(item.word)})"
+            >
+              ▶ Listen
+            </button>
+
+            <button
+              class="learn-btn ${learned ? "learned" : ""}"
+              onclick="toggleLearned(${item.id})"
+            >
+              ${learned ? "✓ Learned" : "○ To review"}
+            </button>
+
+            <button
+              class="delete-btn"
+              onclick="deleteWord(${item.id})"
+            >
+              Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
 
     }
 
@@ -1047,7 +1205,53 @@
 
 
       saveVocabulary(vocabulary);
+let vocabularyFilter = "all";
+      function setVocabularyFilter(filter) {
 
+  vocabularyFilter = filter;
+
+
+  document.getElementById(
+    "filterAll"
+  ).classList.remove("active");
+
+  document.getElementById(
+    "filterReview"
+  ).classList.remove("active");
+
+  document.getElementById(
+    "filterLearned"
+  ).classList.remove("active");
+
+
+  if (filter === "all") {
+
+    document.getElementById(
+      "filterAll"
+    ).classList.add("active");
+
+  }
+
+  if (filter === "review") {
+
+    document.getElementById(
+      "filterReview"
+    ).classList.add("active");
+
+  }
+
+  if (filter === "learned") {
+
+    document.getElementById(
+      "filterLearned"
+    ).classList.add("active");
+
+  }
+
+
+  renderVocabulary();
+
+}
       renderVocabulary();
 
     }
