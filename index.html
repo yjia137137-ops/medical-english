@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Medical English</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f6f6f4;
+      color: #222;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Arial, sans-serif;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    .header {
+      margin-bottom: 40px;
+    }
+
+    .title {
+      font-size: 42px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: #888;
+      font-size: 17px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 25px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .section-text {
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 12px;
+      padding: 14px 20px;
+    }
+
+    .primary-btn {
+      width: 100%;
+      background: #222;
+      color: #fff;
+    }
+
+    .secondary-btn {
+      width: 100%;
+      background: #fff;
+      border: 1px solid #ddd;
+      color: #333;
+    }
+
+    .divider {
+      height: 1px;
+      background: #eee;
+      margin: 32px 0;
+    }
+
+    .stats {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .stats-number {
+      font-size: 46px;
+      font-weight: 600;
+    }
+
+    .stats-label {
+      color: #999;
+      margin-top: 4px;
+    }
+
+    /* Add Note */
+
+    .form-card {
+      display: none;
+    }
+
+    .field {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: none;
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 16px;
+      color: #222;
+      font-family: inherit;
+    }
+
+    input {
+      height: 52px;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    textarea.small {
+      min-height: 100px;
+    }
+
+    .save-btn {
+      width: 100%;
+      background: #222;
+      color: #fff;
+      margin-top: 5px;
+    }
+
+    .back-btn {
+      background: none;
+      padding: 0;
+      color: #777;
+      margin-bottom: 24px;
+    }
+
+    /* Lists */
+
+    .list-page {
+      display: none;
+    }
+
+    .note-card,
+    .word-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 18px;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 16px;
+    }
+
+    .topic {
+      color: #777;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .date {
+      color: #aaa;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .sentence {
+      font-size: 19px;
+      line-height: 1.6;
+    }
+
+    .meaning {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #eee;
+      color: #777;
+      line-height: 1.6;
+    }
+
+    .word {
+      font-size: 25px;
+      font-weight: 600;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .listen-btn,
+    .delete-btn {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 9px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    .delete-btn {
+      color: #999;
+    }
+
+    .empty {
+      text-align: center;
+      color: #aaa;
+      padding: 80px 20px;
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        padding: 40px 18px;
+      }
+
+      .title {
+        font-size: 36px;
+      }
+
+      .card {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Home -->
+
+  <div id="homePage" class="page">
+
+    <div class="header">
+      <h1 class="title">Medical English</h1>
+      <div class="subtitle">
+        Your clinical English notebook
+      </div>
+    </div>
+
+    <div class="card">
+
+      <div class="section">
+        <div class="section-title">
+          Today's learning
+        </div>
+
+        <div class="section-text">
+          Save useful sentences from your medical English practice.
+        </div>
+
+        <button
+          class="primary-btn"
+          onclick="showAddPage()"
+        >
+          ＋ Add a sentence
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title">
+          Vocabulary
+        </div>
+
+        <div class="section-text">
+          Build your personal medical vocabulary.
+        </div>
+
+        <button
+          class="secondary-btn"
+          onclick="showVocabularyPage()"
+        >
+          Open vocabulary
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title">
+          My Notes
+        </div>
+
+        <div class="section-text">
+          Browse all the medical English sentences you've saved.
+        </div>
+
+        <button
+          class="secondary-btn"
+          onclick="showNotesPage()"
+        >
+          View my notes
+        </button>
+      </div>
+
+    </div>
+
+    <div class="stats">
+      <div id="noteCount" class="stats-number">
+        0
+      </div>
+
+      <div class="stats-label">
+        sentences saved
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Add Page -->
+
+  <div id="addPage" class="page form-card">
+
+    <button
+      class="back-btn"
+      onclick="showHome()"
+    >
+      ← Back
+    </button>
+
+    <div class="header">
+      <h1 class="title">Medical English</h1>
+
+      <div class="subtitle">
+        Add a learning note
+      </div>
+    </div>
+
+    <div class="card">
+
+      <div class="field">
+        <label>Topic</label>
+
+        <input
+          id="topicInput"
+          placeholder="e.g. Ischemic Stroke"
+        >
+      </div>
+
+      <div class="field">
+        <label>English sentence</label>
+
+        <textarea
+          id="sentenceInput"
+          placeholder="Type the sentence you want to remember..."
+        ></textarea>
+      </div>
+
+      <div class="field">
+        <label>
+          Vocabulary
+          <span style="color:#999;font-size:13px;">
+            (optional)
+          </span>
+        </label>
+
+        <textarea
+          id="vocabularyInput"
+          class="small"
+          placeholder="Add useful words, one per line..."
+        ></textarea>
+      </div>
+
+      <div class="field">
+        <label>
+          Your understanding
+          <span style="color:#999;font-size:13px;">
+            (optional)
+          </span>
+        </label>
+
+        <textarea
+          id="meaningInput"
+          class="small"
+          placeholder="中文意思、备注或临床场景..."
+        ></textarea>
+      </div>
+
+      <button
+        class="save-btn"
+        onclick="saveNote()"
+      >
+        Save
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- My Notes -->
+
+  <div id="notesPage" class="page list-page">
+
+    <button
+      class="back-btn"
+      onclick="showHome()"
+    >
+      ← Back
+    </button>
+
+    <div class="header">
+      <h1 class="title">My Notes</h1>
+
+      <div
+        id="notesSubtitle"
+        class="subtitle"
+      >
+        0 sentences saved
+      </div>
+    </div>
+
+    <div id="notesList"></div>
+
+  </div>
+
+
+  <!-- Vocabulary -->
+
+  <div id="vocabularyPage" class="page list-page">
+
+    <button
+      class="back-btn"
+      onclick="showHome()"
+    >
+      ← Back
+    </button>
+
+    <div class="header">
+      <h1 class="title">Vocabulary</h1>
+
+      <div
+        id="vocabularySubtitle"
+        class="subtitle"
+      >
+        0 words saved
+      </div>
+    </div>
+
+    <div id="vocabularyList"></div>
+
+  </div>
+
+
+  <script>
+
+    // =========================
+    // Storage
+    // =========================
+
+    function getNotes() {
+      return JSON.parse(
+        localStorage.getItem("medicalEnglishNotes") || "[]"
+      );
+    }
+
+    function getVocabulary() {
+      return JSON.parse(
+        localStorage.getItem("medicalEnglishVocabulary") || "[]"
+      );
+    }
+
+    function saveNotes(notes) {
+      localStorage.setItem(
+        "medicalEnglishNotes",
+        JSON.stringify(notes)
+      );
+    }
+
+    function saveVocabulary(vocabulary) {
+      localStorage.setItem(
+        "medicalEnglishVocabulary",
+        JSON.stringify(vocabulary)
+      );
+    }
+
+
+    // =========================
+    // Page navigation
+    // =========================
+
+    function hideAllPages() {
+      document.getElementById("homePage").style.display = "none";
+      document.getElementById("addPage").style.display = "none";
+      document.getElementById("notesPage").style.display = "none";
+      document.getElementById("vocabularyPage").style.display = "none";
+    }
+
+    function showHome() {
+      hideAllPages();
+
+      document.getElementById("homePage").style.display = "block";
+
+      updateHome();
+    }
+
+    function showAddPage() {
+      hideAllPages();
+
+      document.getElementById("addPage").style.display = "block";
+    }
+
+    function showNotesPage() {
+      hideAllPages();
+
+      document.getElementById("notesPage").style.display = "block";
+
+      renderNotes();
+    }
+
+    function showVocabularyPage() {
+      hideAllPages();
+
+      document.getElementById("vocabularyPage").style.display = "block";
+
+      renderVocabulary();
+    }
+
+
+    // =========================
+    // Home
+    // =========================
+
+    function updateHome() {
+
+      const notes = getNotes();
+
+      document.getElementById("noteCount").textContent =
+        notes.length;
+    }
+
+
+    // =========================
+    // Save Note
+    // =========================
+
+    function saveNote() {
+
+      const topic =
+        document.getElementById("topicInput").value.trim();
+
+      const sentence =
+        document.getElementById("sentenceInput").value.trim();
+
+      const vocabularyText =
+        document.getElementById("vocabularyInput").value.trim();
+
+      const meaning =
+        document.getElementById("meaningInput").value.trim();
+
+
+      if (!sentence) {
+
+        alert("Please enter a sentence.");
+
+        return;
+      }
+
+
+      // Save sentence
+
+      const notes = getNotes();
+
+      const newNote = {
+
+        id: Date.now(),
+
+        topic:
+          topic || "Uncategorized",
+
+        sentence:
+          sentence,
+
+        meaning:
+          meaning,
+
+        date:
+          new Date().toLocaleDateString()
+
+      };
+
+      notes.unshift(newNote);
+
+      saveNotes(notes);
+
+
+      // Save vocabulary
+
+      const words =
+        vocabularyText
+          .split(/[\n,，]+/)
+          .map(word => word.trim())
+          .filter(word => word.length > 0);
+
+
+      const vocabulary =
+        getVocabulary();
+
+
+      words.forEach(word => {
+
+        const exists =
+          vocabulary.some(item =>
+            item.word.toLowerCase() ===
+            word.toLowerCase()
+          );
+
+
+        if (!exists) {
+
+          vocabulary.unshift({
+
+            id:
+              Date.now() +
+              Math.random(),
+
+            word:
+              word,
+
+            topic:
+              topic || "Uncategorized",
+
+            date:
+              new Date().toLocaleDateString()
+
+          });
+
+        }
+
+      });
+
+
+      saveVocabulary(vocabulary);
+
+
+      // Clear form
+
+      document.getElementById("topicInput").value = "";
+
+      document.getElementById("sentenceInput").value = "";
+
+      document.getElementById("vocabularyInput").value = "";
+
+      document.getElementById("meaningInput").value = "";
+
+
+      alert("Saved.");
+
+      showHome();
+    }
+
+
+    // =========================
+    // My Notes
+    // =========================
+
+    function renderNotes() {
+
+      const notes = getNotes();
+
+      const list =
+        document.getElementById("notesList");
+
+      document.getElementById("notesSubtitle").textContent =
+        notes.length + " sentences saved";
+
+
+      if (notes.length === 0) {
+
+        list.innerHTML =
+          '<div class="empty">No sentences yet.</div>';
+
+        return;
+      }
+
+
+      list.innerHTML =
+        notes.map(note => `
+
+          <div class="note-card">
+
+            <div class="top-row">
+
+              <div class="topic">
+                ${escapeHtml(note.topic)}
+              </div>
+
+              <div class="date">
+                ${escapeHtml(note.date)}
+              </div>
+
+            </div>
+
+            <div class="sentence">
+              ${escapeHtml(note.sentence)}
+            </div>
+
+            ${
+              note.meaning
+              ? `
+                <div class="meaning">
+                  ${escapeHtml(note.meaning)}
+                </div>
+              `
+              : ""
+            }
+
+            <div class="actions">
+
+              <button
+                class="listen-btn"
+                onclick="listenText(${JSON.stringify(note.sentence)})"
+              >
+                ▶ Listen
+              </button>
+
+              <button
+                class="delete-btn"
+                onclick="deleteNote(${note.id})"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </div>
+
+        `).join("");
+    }
+
+
+    // =========================
+    // Vocabulary
+    // =========================
+
+    function renderVocabulary() {
+
+      const vocabulary =
+        getVocabulary();
+
+      const list =
+        document.getElementById("vocabularyList");
+
+
+      document.getElementById(
+        "vocabularySubtitle"
+      ).textContent =
+        vocabulary.length + " words saved";
+
+
+      if (vocabulary.length === 0) {
+
+        list.innerHTML = `
+          <div class="empty">
+            <div>No vocabulary yet.</div>
+
+            <div style="margin-top:10px;font-size:14px;">
+              Add useful words when saving a sentence.
+            </div>
+          </div>
+        `;
+
+        return;
+      }
+
+
+      list.innerHTML =
+        vocabulary.map(item => `
+
+          <div class="word-card">
+
+            <div class="top-row">
+
+              <div class="word">
+                ${escapeHtml(item.word)}
+              </div>
+
+              <div class="date">
+                ${escapeHtml(item.date)}
+              </div>
+
+            </div>
+
+            <div class="topic">
+              ${escapeHtml(item.topic)}
+            </div>
+
+            <div class="actions">
+
+              <button
+                class="listen-btn"
+                onclick="listenText(${JSON.stringify(item.word)})"
+              >
+                ▶ Listen
+              </button>
+
+              <button
+                class="delete-btn"
+                onclick="deleteWord(${item.id})"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </div>
+
+        `).join("");
+    }
+
+
+    // =========================
+    // Delete Note
+    // =========================
+
+    function deleteNote(id) {
+
+      const confirmed =
+        confirm(
+          "Delete this note?\n\nThis sentence will be removed from My Notes."
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      const notes =
+        getNotes().filter(
+          item => item.id !== id
+        );
+
+
+      saveNotes(notes);
+
+      renderNotes();
+
+      updateHome();
+    }
+
+
+    // =========================
+    // Delete Vocabulary
+    // =========================
+
+    function deleteWord(id) {
+
+      const confirmed =
+        confirm(
+          "Delete this word?\n\nThis word will be removed from Vocabulary."
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      const vocabulary =
+        getVocabulary().filter(
+          item => item.id !== id
+        );
+
+
+      saveVocabulary(vocabulary);
+
+      renderVocabulary();
+    }
+
+
+    // =========================
+    // Temporary TTS
+    // =========================
+
+    function listenText(text) {
+
+      if (!text) {
+        return;
+      }
+
+
+      if (!("speechSynthesis" in window)) {
+
+        alert(
+          "Your browser does not support text-to-speech."
+        );
+
+        return;
+      }
+
+
+      window.speechSynthesis.cancel();
+
+
+      const utterance =
+        new SpeechSynthesisUtterance(text);
+
+      utterance.lang = "en-US";
+
+      utterance.rate = 0.9;
+
+      window.speechSynthesis.speak(
+        utterance
+      );
+    }
+
+
+    // =========================
+    // Security
+    // =========================
+
+    function escapeHtml(text) {
+
+      const div =
+        document.createElement("div");
+
+      div.textContent =
+        text || "";
+
+      return div.innerHTML;
+    }
+
+
+    // =========================
+    // Initial load
+    // =========================
+
+    showHome();
+
+  </script>
+
+</body>
+</html>
