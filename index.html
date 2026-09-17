@@ -1,757 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Medical English</title>
-
-  <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: #f6f6f4;
-      color: #222;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-    }
-
-    .page {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 60px 24px;
-    }
-
-    .header { margin-bottom: 40px; }
-
-    .title {
-      font-size: 42px;
-      font-weight: 600;
-      margin: 0;
-    }
-
-    .subtitle {
-      margin-top: 8px;
-      color: #888;
-      font-size: 17px;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 20px;
-      padding: 32px;
-      margin-bottom: 24px;
-    }
-
-    .section { margin-bottom: 32px; }
-    .section:last-child { margin-bottom: 0; }
-
-    .section-title {
-      font-size: 25px;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .section-text {
-      color: #888;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    button {
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      border-radius: 12px;
-      padding: 14px 20px;
-    }
-
-    .primary-btn {
-      width: 100%;
-      background: #222;
-      color: #fff;
-    }
-
-    .secondary-btn {
-      width: 100%;
-      background: #fff;
-      border: 1px solid #ddd;
-      color: #333;
-    }
-
-    .divider {
-      height: 1px;
-      background: #eee;
-      margin: 32px 0;
-    }
-
-    .stats {
-      text-align: center;
-      margin-top: 30px;
-    }
-
-    .stats-number {
-      font-size: 46px;
-      font-weight: 600;
-    }
-
-    .stats-label {
-      color: #999;
-      margin-top: 4px;
-    }
-
-    .form-card,
-    .list-page {
-      display: none;
-    }
-
-    .field { margin-bottom: 24px; }
-
-    label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: 500;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      border: none;
-      background: #f7f7f7;
-      border-radius: 12px;
-      padding: 16px;
-      font-size: 16px;
-      color: #222;
-      font-family: inherit;
-    }
-
-    input { height: 52px; }
-
-    textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-
-    textarea.small { min-height: 100px; }
-
-    .save-btn {
-      width: 100%;
-      background: #222;
-      color: #fff;
-      margin-top: 5px;
-    }
-
-    .back-btn {
-      background: none;
-      padding: 0;
-      color: #777;
-      margin-bottom: 24px;
-    }
-
-    .note-card {
-      background: #fff;
-      border-radius: 18px;
-      padding: 26px;
-      margin-bottom: 18px;
-    }
-
-    .top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 16px;
-    }
-
-    .topic {
-      color: #777;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .date {
-      color: #aaa;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-
-    .sentence {
-      font-size: 19px;
-      line-height: 1.6;
-    }
-
-    .meaning {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid #eee;
-      color: #777;
-      line-height: 1.6;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .listen-btn,
-    .delete-btn {
-      background: #fff;
-      border: 1px solid #ddd;
-      padding: 9px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-    }
-
-    .delete-btn { color: #999; }
-
-    .empty {
-      text-align: center;
-      color: #aaa;
-      padding: 80px 20px;
-    }
-
-    /* Review */
-
-    .review-count {
-      text-align: center;
-      color: #999;
-      font-size: 14px;
-      margin-bottom: 28px;
-    }
-
-    .review-sentence {
-      font-size: 26px;
-      line-height: 1.7;
-      text-align: center;
-      margin: 40px 0;
-    }
-
-    .review-actions {
-      justify-content: center;
-    }
-
-    .review-meaning-btn {
-      width: auto;
-    }
-
-    .review-meaning {
-      text-align: center;
-      margin-top: 24px;
-    }
-
-    @media (max-width: 600px) {
-      .page { padding: 40px 18px; }
-      .title { font-size: 36px; }
-      .card { padding: 24px; }
-      .review-sentence { font-size: 22px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical English</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f6f4;color:#222;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+.page{max-width:760px;margin:0 auto;padding:60px 24px}
+.header{margin-bottom:40px}
+.title{font-size:42px;font-weight:600;margin:0}
+.subtitle{margin-top:8px;color:#888;font-size:17px}
+.card,.note-card{background:#fff;border-radius:20px;padding:32px;margin-bottom:24px}
+.section{margin-bottom:32px}.section:last-child{margin-bottom:0}
+.section-title{font-size:25px;font-weight:600;margin-bottom:10px}
+.section-text{color:#888;line-height:1.6;margin-bottom:20px}
+button{border:none;cursor:pointer;font-size:16px;border-radius:12px;padding:14px 20px}
+.primary-btn{width:100%;background:#222;color:#fff}
+.secondary-btn{width:100%;background:#fff;border:1px solid #ddd;color:#333}
+.divider{height:1px;background:#eee;margin:32px 0}
+.stats{text-align:center;margin-top:30px}.stats-number{font-size:46px;font-weight:600}.stats-label{color:#999;margin-top:4px}
+.form-page,.list-page{display:none}
+.back-btn{background:none;padding:0;color:#777;margin-bottom:24px}
+.field{margin-bottom:24px}
+label{display:block;margin-bottom:10px;font-weight:500}
+input,textarea{width:100%;border:none;background:#f7f7f7;border-radius:12px;padding:16px;font-size:16px;color:#222;font-family:inherit}
+input{height:52px}textarea{min-height:150px;resize:vertical}.small{min-height:100px}
+.save-btn{width:100%;background:#222;color:#fff;margin-top:5px}
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px}
+.topic{color:#777;font-size:14px;font-weight:600}.date{color:#aaa;font-size:13px;white-space:nowrap}
+.sentence{font-size:19px;line-height:1.6}.meaning{margin-top:16px;padding-top:16px;border-top:1px solid #eee;color:#777;line-height:1.6}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.listen-btn,.delete-btn{background:#fff;border:1px solid #ddd;padding:9px 16px;border-radius:20px;font-size:14px}
+.delete-btn{color:#999}
+.empty{text-align:center;color:#aaa;padding:80px 20px}
+@media(max-width:600px){.page{padding:40px 18px}.title{font-size:36px}.card{padding:24px}}
+</style>
 </head>
 
 <body>
 
-  <!-- Home -->
-  <div id="homePage" class="page">
-
-    <div class="header">
-      <h1 class="title">Medical English</h1>
-      <div class="subtitle">Your clinical English notebook</div>
-    </div>
-
-    <div class="card">
-
-      <div class="section">
-        <div class="section-title">Today's learning</div>
-
-        <div class="section-text">
-          Save useful sentences from your medical English practice.
-        </div>
-
-        <button class="primary-btn" onclick="showAddPage()">
-          ＋ Add a sentence
-        </button>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="section">
-        <div class="section-title">My Notes</div>
-
-        <div class="section-text">
-          Browse all the medical English sentences you've saved.
-        </div>
-
-        <button class="secondary-btn" onclick="showNotesPage()">
-          View my notes
-        </button>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="section">
-        <div class="section-title">Review</div>
-
-        <div class="section-text">
-          Review your saved medical English sentences.
-        </div>
-
-        <button class="secondary-btn" onclick="showReviewPage()">
-          Start review
-        </button>
-      </div>
-
-    </div>
-
-    <div class="stats">
-      <div id="noteCount" class="stats-number">0</div>
-      <div class="stats-label">sentences saved</div>
-    </div>
-
+<!-- Home -->
+<div id="homePage" class="page">
+  <div class="header">
+    <h1 class="title">Medical English</h1>
+    <div class="subtitle">Your clinical English notebook</div>
   </div>
 
-
-  <!-- Add -->
-  <div id="addPage" class="page form-card">
-
-    <button class="back-btn" onclick="showHome()">← Back</button>
-
-    <div class="header">
-      <h1 class="title">Medical English</h1>
-      <div class="subtitle">Add a learning note</div>
+  <div class="card">
+    <div class="section">
+      <div class="section-title">Today's learning</div>
+      <div class="section-text">
+        Save useful sentences from your medical English practice.
+      </div>
+      <button class="primary-btn" onclick="showAddPage()">＋ Add a sentence</button>
     </div>
 
-    <div class="card">
+    <div class="divider"></div>
 
-      <div class="field">
-        <label>Topic</label>
-        <input id="topicInput" placeholder="e.g. Ischemic Stroke">
+    <div class="section">
+      <div class="section-title">My Notes</div>
+      <div class="section-text">
+        Browse all the medical English sentences you've saved.
       </div>
-
-      <div class="field">
-        <label>English sentence</label>
-        <textarea
-          id="sentenceInput"
-          placeholder="Type the sentence you want to remember..."
-        ></textarea>
-      </div>
-
-      <div class="field">
-        <label>
-          Your understanding
-          <span style="color:#999;font-size:13px;">(optional)</span>
-        </label>
-
-        <textarea
-          id="meaningInput"
-          class="small"
-          placeholder="中文意思、备注或临床场景..."
-        ></textarea>
-      </div>
-
-      <button class="save-btn" onclick="saveNote()">Save</button>
-
+      <button class="secondary-btn" onclick="showNotesPage()">View my notes</button>
     </div>
   </div>
 
+  <div class="stats">
+    <div id="noteCount" class="stats-number">0</div>
+    <div class="stats-label">sentences saved</div>
+  </div>
+</div>
 
-  <!-- My Notes -->
-  <div id="notesPage" class="page list-page">
 
-    <button class="back-btn" onclick="showHome()">← Back</button>
+<!-- Add -->
+<div id="addPage" class="page form-page">
+  <button class="back-btn" onclick="showHome()">← Back</button>
 
-    <div class="header">
-      <h1 class="title">My Notes</h1>
-      <div id="notesSubtitle" class="subtitle">0 sentences saved</div>
-    </div>
-
-    <div id="notesList"></div>
-
+  <div class="header">
+    <h1 class="title">Medical English</h1>
+    <div class="subtitle">Add a learning note</div>
   </div>
 
-
-  <!-- Review -->
-  <div id="reviewPage" class="page list-page">
-
-    <button class="back-btn" onclick="showHome()">← Back</button>
-
-    <div class="header">
-      <h1 class="title">Review</h1>
-      <div class="subtitle">Review your saved medical English sentences</div>
+  <div class="card">
+    <div class="field">
+      <label>Topic</label>
+      <input id="topicInput" placeholder="e.g. Ischemic Stroke">
     </div>
 
-    <div class="card">
-      <div id="reviewContent"></div>
+    <div class="field">
+      <label>English sentence</label>
+      <textarea id="sentenceInput" placeholder="Type the sentence you want to remember..."></textarea>
     </div>
 
+    <div class="field">
+      <label>
+        Your understanding
+        <span style="color:#999;font-size:13px;">(optional)</span>
+      </label>
+      <textarea id="meaningInput" class="small" placeholder="中文意思、备注或临床场景..."></textarea>
+    </div>
+
+    <button class="save-btn" onclick="saveNote()">Save</button>
+  </div>
+</div>
+
+
+<!-- My Notes -->
+<div id="notesPage" class="page list-page">
+  <button class="back-btn" onclick="showHome()">← Back</button>
+
+  <div class="header">
+    <h1 class="title">My Notes</h1>
+    <div id="notesSubtitle" class="subtitle">0 sentences saved</div>
   </div>
 
-
-  <script>
-
-    // =========================
-    // Storage
-    // =========================
-
-    function getNotes() {
-      return JSON.parse(
-        localStorage.getItem("medicalEnglishNotes") || "[]"
-      );
-    }
-
-    function saveNotes(notes) {
-      localStorage.setItem(
-        "medicalEnglishNotes",
-        JSON.stringify(notes)
-      );
-    }
+  <div id="notesList"></div>
+</div>
 
 
-    // =========================
-    // Navigation
-    // =========================
+<script>
+function getNotes(){
+  try{
+    return JSON.parse(localStorage.getItem("medicalEnglishNotes") || "[]");
+  }catch(e){
+    console.error("Storage error:",e);
+    return [];
+  }
+}
 
-    function hideAllPages() {
-      document.getElementById("homePage").style.display = "none";
-      document.getElementById("addPage").style.display = "none";
-      document.getElementById("notesPage").style.display = "none";
-      document.getElementById("reviewPage").style.display = "none";
-    }
+function saveNotes(notes){
+  localStorage.setItem("medicalEnglishNotes",JSON.stringify(notes));
+}
 
-    function showHome() {
-      hideAllPages();
-      document.getElementById("homePage").style.display = "block";
-      updateHome();
-    }
+function hideAllPages(){
+  document.getElementById("homePage").style.display="none";
+  document.getElementById("addPage").style.display="none";
+  document.getElementById("notesPage").style.display="none";
+}
 
-    function showAddPage() {
-      hideAllPages();
-      document.getElementById("addPage").style.display = "block";
-    }
+function showHome(){
+  hideAllPages();
+  document.getElementById("homePage").style.display="block";
+  updateHome();
+}
 
-    function showNotesPage() {
-      hideAllPages();
-      document.getElementById("notesPage").style.display = "block";
-      renderNotes();
-    }
+function showAddPage(){
+  hideAllPages();
+  document.getElementById("addPage").style.display="block";
+}
 
-    function showReviewPage() {
-      hideAllPages();
-      document.getElementById("reviewPage").style.display = "block";
-      startReview();
-    }
+function showNotesPage(){
+  hideAllPages();
+  document.getElementById("notesPage").style.display="block";
+  renderNotes();
+}
 
+function updateHome(){
+  document.getElementById("noteCount").textContent=getNotes().length;
+}
 
-    // =========================
-    // Home
-    // =========================
+function saveNote(){
+  const topic=document.getElementById("topicInput").value.trim();
+  const sentence=document.getElementById("sentenceInput").value.trim();
+  const meaning=document.getElementById("meaningInput").value.trim();
 
-    function updateHome() {
-      document.getElementById("noteCount").textContent =
-        getNotes().length;
-    }
+  if(!sentence){
+    alert("Please enter a sentence.");
+    return;
+  }
 
+  const notes=getNotes();
+  notes.unshift({
+    id:Date.now(),
+    topic:topic || "Uncategorized",
+    sentence:sentence,
+    meaning:meaning,
+    date:new Date().toLocaleDateString()
+  });
 
-    // =========================
-    // Save
-    // =========================
+  saveNotes(notes);
 
-    function saveNote() {
-      const topic =
-        document.getElementById("topicInput").value.trim();
+  document.getElementById("topicInput").value="";
+  document.getElementById("sentenceInput").value="";
+  document.getElementById("meaningInput").value="";
 
-      const sentence =
-        document.getElementById("sentenceInput").value.trim();
+  alert("Saved.");
+  showHome();
+}
 
-      const meaning =
-        document.getElementById("meaningInput").value.trim();
+function renderNotes(){
+  const notes=getNotes();
+  const list=document.getElementById("notesList");
 
-      if (!sentence) {
-        alert("Please enter a sentence.");
-        return;
-      }
+  document.getElementById("notesSubtitle").textContent=
+    notes.length+" sentences saved";
 
-      const notes = getNotes();
+  if(notes.length===0){
+    list.innerHTML='<div class="empty">No sentences yet.</div>';
+    return;
+  }
 
-      notes.unshift({
-        id: Date.now(),
-        topic: topic || "Uncategorized",
-        sentence: sentence,
-        meaning: meaning,
-        date: new Date().toLocaleDateString()
-      });
+  list.innerHTML=notes.map(note=>`
+    <div class="note-card">
+      <div class="top-row">
+        <div class="topic">${escapeHtml(note.topic)}</div>
+        <div class="date">${escapeHtml(note.date)}</div>
+      </div>
 
-      saveNotes(notes);
+      <div class="sentence">${escapeHtml(note.sentence)}</div>
 
-      document.getElementById("topicInput").value = "";
-      document.getElementById("sentenceInput").value = "";
-      document.getElementById("meaningInput").value = "";
+      ${note.meaning ? `
+        <div class="meaning">${escapeHtml(note.meaning)}</div>
+      ` : ""}
 
-      alert("Saved.");
-      showHome();
-    }
-
-
-    // =========================
-    // My Notes
-    // =========================
-
-    function renderNotes() {
-      const notes = getNotes();
-      const list = document.getElementById("notesList");
-
-      document.getElementById("notesSubtitle").textContent =
-        notes.length + " sentences saved";
-
-      if (notes.length === 0) {
-        list.innerHTML =
-          '<div class="empty">No sentences yet.</div>';
-        return;
-      }
-
-      list.innerHTML = notes.map(note => `
-        <div class="note-card">
-
-          <div class="top-row">
-            <div class="topic">
-              ${escapeHtml(note.topic)}
-            </div>
-
-            <div class="date">
-              ${escapeHtml(note.date)}
-            </div>
-          </div>
-
-          <div class="sentence">
-            ${escapeHtml(note.sentence)}
-          </div>
-
-          ${
-            note.meaning
-              ? `<div class="meaning">
-                   ${escapeHtml(note.meaning)}
-                 </div>`
-              : ""
-          }
-
-          <div class="actions">
-
-            <button
-              class="listen-btn"
-              onclick="listenText(${JSON.stringify(note.sentence)})"
-            >
-              ▶ Listen
-            </button>
-
-            <button
-              class="delete-btn"
-              onclick="deleteNote(${note.id})"
-            >
-              Delete
-            </button>
-
-          </div>
-
-        </div>
-      `).join("");
-    }
-
-
-    // =========================
-    // Review
-    // =========================
-
-    let reviewNotes = [];
-    let reviewIndex = 0;
-    let reviewShowMeaning = false;
-
-    function startReview() {
-      reviewNotes = getNotes();
-
-      if (reviewNotes.length === 0) {
-        document.getElementById("reviewContent").innerHTML = `
-          <div class="empty">
-            <div>No sentences to review yet.</div>
-            <div style="margin-top:10px;font-size:14px;">
-              Save some medical English sentences first.
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      // Random order for each review session.
-      reviewNotes = [...reviewNotes].sort(
-        () => Math.random() - 0.5
-      );
-
-      reviewIndex = 0;
-      reviewShowMeaning = false;
-
-      renderReview();
-    }
-
-    function renderReview() {
-      const note = reviewNotes[reviewIndex];
-
-      if (!note) {
-        document.getElementById("reviewContent").innerHTML = `
-          <div class="empty">
-            <div>Review complete.</div>
-
-            <button
-              class="primary-btn"
-              style="margin-top:20px;"
-              onclick="startReview()"
-            >
-              Review again
-            </button>
-          </div>
-        `;
-        return;
-      }
-
-      document.getElementById("reviewContent").innerHTML = `
-
-        <div class="review-count">
-          ${reviewIndex + 1} / ${reviewNotes.length}
-        </div>
-
-        <div class="review-sentence">
-          ${escapeHtml(note.sentence)}
-        </div>
-
-        <div class="actions review-actions">
-
-          <button
-            class="listen-btn"
-            onclick="listenText(${JSON.stringify(note.sentence)})"
-          >
-            ▶ Listen
-          </button>
-
-          <button
-            class="secondary-btn review-meaning-btn"
-            onclick="toggleReviewMeaning()"
-          >
-            ${reviewShowMeaning ? "Hide meaning" : "Show meaning"}
-          </button>
-
-        </div>
-
-        ${
-          reviewShowMeaning
-            ? `<div class="meaning review-meaning">
-                 ${
-                   note.meaning
-                     ? escapeHtml(note.meaning)
-                     : "No meaning saved for this sentence."
-                 }
-               </div>`
-            : ""
-        }
-
-        <button
-          class="primary-btn"
-          style="margin-top:24px;"
-          onclick="nextReview()"
-        >
-          Next sentence
+      <div class="actions">
+        <button class="listen-btn" data-id="${note.id}" onclick="listenNote(this)">
+          ▶ Listen
         </button>
-      `;
-    }
 
-    function toggleReviewMeaning() {
-      reviewShowMeaning = !reviewShowMeaning;
-      renderReview();
-    }
-
-    function nextReview() {
-      reviewIndex++;
-      reviewShowMeaning = false;
-      renderReview();
-    }
+        <button class="delete-btn" data-id="${note.id}" onclick="deleteNote(this)">
+          Delete
+        </button>
+      </div>
+    </div>
+  `).join("");
+}
 
 
-    // =========================
-    // Delete
-    // =========================
+/*
+  TTS
+  The button only passes the note ID.
+  The actual sentence is read from localStorage.
+  This avoids putting sentence text into onclick code.
+*/
+function listenNote(button){
+  const id=Number(button.dataset.id);
+  const notes=getNotes();
+  const note=notes.find(item=>Number(item.id)===id);
 
-    function deleteNote(id) {
-      const confirmed = confirm(
-        "Delete this note?\n\nThis sentence will be removed from My Notes."
-      );
+  if(!note || !note.sentence){
+    alert("No sentence found.");
+    return;
+  }
 
-      if (!confirmed) return;
+  const text=note.sentence;
 
-      saveNotes(
-        getNotes().filter(item => item.id !== id)
-      );
+  if(!window.speechSynthesis){
+    alert("Speech synthesis is not available in this browser.");
+    return;
+  }
 
-      renderNotes();
-      updateHome();
-    }
+  window.speechSynthesis.cancel();
 
+  const utterance=new SpeechSynthesisUtterance(text);
+  utterance.lang="en-US";
+  utterance.rate=0.9;
+  utterance.pitch=1;
+  utterance.volume=1;
 
-    // =========================
-    // Browser TTS
-    // =========================
+  utterance.onstart=function(){
+    button.textContent="▶ Playing...";
+  };
 
-    function listenText(text) {
-      if (!text) {
-        alert("No text to read.");
-        return;
-      }
+  utterance.onend=function(){
+    button.textContent="▶ Listen";
+  };
 
-      if (
-        !("speechSynthesis" in window) ||
-        typeof SpeechSynthesisUtterance === "undefined"
-      ) {
-        alert("This browser does not support speech synthesis.");
-        return;
-      }
+  utterance.onerror=function(event){
+    button.textContent="▶ Listen";
+    console.error("Speech synthesis error:",event);
+    alert("TTS error: "+(event.error || "unknown error"));
+  };
 
-      window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+}
 
-      const utterance =
-        new SpeechSynthesisUtterance(text);
+function deleteNote(button){
+  const id=Number(button.dataset.id);
 
-      utterance.lang = "en-US";
-      utterance.rate = 0.9;
-      utterance.pitch = 1;
-      utterance.volume = 1;
+  if(!confirm("Delete this note?\n\nThis sentence will be removed from My Notes.")){
+    return;
+  }
 
-      utterance.onerror = function(event) {
-        console.error("TTS error:", event);
+  saveNotes(
+    getNotes().filter(item=>Number(item.id)!==id)
+  );
 
-        alert(
-          "TTS error: " +
-          (event.error || "unknown error")
-        );
-      };
+  renderNotes();
+  updateHome();
+}
 
-      window.speechSynthesis.speak(utterance);
-    }
+function escapeHtml(text){
+  const div=document.createElement("div");
+  div.textContent=text || "";
+  return div.innerHTML;
+}
 
-
-    // =========================
-    // Security
-    // =========================
-
-    function escapeHtml(text) {
-      const div = document.createElement("div");
-      div.textContent = text || "";
-      return div.innerHTML;
-    }
-
-
-    // =========================
-    // Initial load
-    // =========================
-
-    showHome();
-
-  </script>
+showHome();
+</script>
 
 </body>
 </html>
